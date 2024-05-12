@@ -25,21 +25,7 @@
 </script>
 
 {#if activeComponent}
-	<p>Render Debug: rendering {component.componentId} with props {JSON.stringify(props)}</p>
-	<svelte:component this={activeComponent} {...props}>
-		{#each component.slots as [k, v]}
-			{#if k === DEFAULT_SLOT}
-				<svelte:fragment>
-					<svelte:self component={v}></svelte:self>
-				</svelte:fragment>
-			{:else}
-				<svelte:fragment slot={k}>
-					<svelte:self component={v}></svelte:self>
-				</svelte:fragment>
-			{/if}
-		{/each}
-	</svelte:component>
-	<p>... render done.</p>
+	<svelte:component this={activeComponent} {...props} slots={component.slots} />
 {:else}
 	{#if SELF_CLOSING_TAGS.includes(component.componentId)}
 		<svelte:element this={component.componentId} {...props}/>
