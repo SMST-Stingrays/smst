@@ -9,6 +9,6 @@
 	export { className as class };
 </script>
 
-<a {href} class={cn($page.url.pathname === href ? "text-foreground" : "text-foreground/60", className)} on:click={() => (open = false)} {...$$restProps}>
+<a {href} class={cn($page.url.pathname === href ? "text-foreground" : "hover:text-foreground transition-colors text-foreground/60", className)} on:click={() => (open = false)} {...$$restProps}>
 	<slot/>
 </a>

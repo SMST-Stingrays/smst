@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { siteConfig } from '$lib/siteConfig';
+	import { page } from '$app/stores';
 </script>
 
 <div class="mr-4 hidden md:flex">
@@ -8,4 +9,19 @@
 			{siteConfig.name}
 		</span>
 	</a>
+
+	<nav class="flex items-center gap-6 text-sm">
+
+	</nav>
+</div>
+
+<div class="hidden md:flex md:flex-1 md:items-center md:space-x-2 md:justify-end">
+	<nav class="flex items-center gap-6 text-sm">
+		{#if $page.data.user}
+			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/logout">Log out</a>
+		{:else}
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/login">Login</a>
+		{/if}
+	</nav>
 </div>
