@@ -1,9 +1,9 @@
-import type { PageServerLoad } from "./$types";
+import type { LayoutServerLoad } from "./$types";
 import { prisma } from '$lib/db';
 import jwt from "jsonwebtoken";
 import { JWT_KEY } from '$env/static/private';
 
-export const load: PageServerLoad = async ({cookies}) => {
+export const load: LayoutServerLoad = async ({cookies}) => {
 	let token = cookies.get("token");
 	if (token) {
 		let decoded = jwt.verify(token, JWT_KEY);

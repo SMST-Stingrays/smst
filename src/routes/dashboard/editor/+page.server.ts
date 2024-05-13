@@ -2,6 +2,9 @@ import type { PageServerLoad } from "./$types";
 import { EDITOR } from '$lib/permissions';
 import { redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db';
+import { superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { formSchema } from './schema';
 
 export const load: PageServerLoad = async ({parent}) => {
 	let { user } = await parent();
@@ -13,6 +16,7 @@ export const load: PageServerLoad = async ({parent}) => {
 
 	return {
 		title: "Page Editor",
-		pages
+		pages,
+		form: await superValidate(zod(formSchema))
 	}
 }
