@@ -25,7 +25,7 @@
 					<Dialog.Header>
 						<Dialog.Title>Create new page</Dialog.Title>
 						<Dialog.Description>
-							Make changes to your profile here. Click save when you're done.
+							The editor will open once you're finished.
 						</Dialog.Description>
 					</Dialog.Header>
 					<CreateForm onSubmit={() => {createOpen = false; toast.success("New page created successfully!")}} data={data.form} />
