@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { Context } from '$lib/dynamicSlot';
+	import type { Component } from '$lib/dynamicSlot';
 	import Slot from '$lib/components/Slot.svelte';
 
-	export let ctx: Context;
+	export let slots: Map<string, Component>;
 </script>
 
 <div class="grid grid-cols-2">
 	<div>
-		<Slot {ctx} name="col1"></Slot>
+		<Slot {slots} name="col1"></Slot>
 	</div>
 	<div>
-		<Slot {ctx} name="col2"></Slot>
+		<Slot {slots} name="col2"></Slot>
 	</div>
 </div>
