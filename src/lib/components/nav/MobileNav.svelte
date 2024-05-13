@@ -26,6 +26,7 @@
 		</MobileLink>
 		<ScrollArea orientation="both" class="my-4 h-[calc(100vh-8rem)] pb-10">
 			{#if $page.data.user}
+				<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
 				<MobileLink href="/logout" bind:open class="text-foreground">Log out</MobileLink>
 			{:else}
 				<MobileLink href="/login" bind:open class="text-foreground">Log in</MobileLink>

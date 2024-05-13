@@ -18,8 +18,9 @@
 <div class="hidden md:flex md:flex-1 md:items-center md:space-x-2 md:justify-end">
 	<nav class="flex items-center gap-6 text-sm">
 		{#if $page.data.user}
-			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/dashboard">Dashboard</a>
 			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/logout">Log out</a>
+			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
 		{:else}
 			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/login">Login</a>
 		{/if}
