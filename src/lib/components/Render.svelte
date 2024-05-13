@@ -1,13 +1,23 @@
 <script lang="ts">
-	import { type Component, DEFAULT_SLOT, EMPTY, SELF_CLOSING_TAGS } from '$lib/dynamicSlot';
+	import {
+		type Component,
+		type Context,
+		DEFAULT_SLOT,
+		EMPTY,
+		SELF_CLOSING_TAGS,
+		type SlotId,
+		slotIdAppend
+	} from '$lib/dynamicSlot';
 	import H1 from "./pageComponents/H1.svelte";
 	import Empty from '$lib/components/pageComponents/Empty.svelte';
 	import HTML from '$lib/components/pageComponents/HTML.svelte';
 	import TwoCols from '$lib/components/pageComponents/TwoCols.svelte';
 
 	export let component: Component;
+	export let idx = 0;
+	export let slotId: SlotId;
 
-	// Register new components here
+	// Register new components here AND in dynamicSlot.ts
 	// eslint-disable-next-line
 	const availComponents: Map<string, any> = new Map([
 		["H1", H1],
@@ -16,28 +26,34 @@
 		[EMPTY.componentId, Empty]
 	]);
 
-	let props = {};
-	for (let [k, v] of component.props) {
-		props[k] = v;
-	}
-
 	let activeComponent = availComponents.get(component.componentId);
+
+	export let editor = false;
+	export let selectedSlotId: SlotId | null = null;
+
+	function select() {
+		if (editor) {
+			selectedSlotId = slotId;
+		}
+	}
 </script>
 
-{#if activeComponent}
-	<svelte:component this={activeComponent} {...props} slots={component.slots} />
-{:else}
-	{#if SELF_CLOSING_TAGS.includes(component.componentId)}
-		<svelte:element this={component.componentId} {...props}/>
+<div role="button" tabindex={1} on:keydown|preventDefault={(e) => {if (e.which === 13) {select()}}} on:click|preventDefault={select} class={(editor ? "hover:bg-primary/20 hover:cursor-pointer" : "") + (selectedSlotId === slotId ? " bg-primary/20 hover:cursor-pointer" : "")}>
+	{#if activeComponent}
+		<svelte:component tabindex={idx+1} {editor} this={activeComponent} {...component.props} ctx={{ slots: component.slots, editor, slotId }} />
 	{:else}
-		<svelte:element this={component.componentId} {...props}>
-			{#each component.slots as [k, v]}
-				{#if k === DEFAULT_SLOT}
-					<svelte:self component={v}></svelte:self>
-				{:else}
-					<!-- We are falling back to a HTML element, so we need to ignore named slots -->
-				{/if}
-			{/each}
-		</svelte:element>
+		{#if SELF_CLOSING_TAGS.includes(component.componentId)}
+			<svelte:element tabindex={idx+1} this={component.componentId} {...component.props}/>
+		{:else}
+			<svelte:element tabindex={idx+1} this={component.componentId} {...component.props}>
+				{#each Object.entries(component.slots) as [k, v]}
+					{#if k === DEFAULT_SLOT}
+						<svelte:self slotId={slotIdAppend(DEFAULT_SLOT, slotId)} idx={idx+1} bind:selectedSlotId component={v} {editor}></svelte:self>
+					{:else}
+						<!-- We are falling back to a HTML element, so we need to ignore named slots -->
+					{/if}
+				{/each}
+			</svelte:element>
+		{/if}
 	{/if}
-{/if}
+</div>

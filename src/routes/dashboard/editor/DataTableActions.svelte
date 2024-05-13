@@ -32,7 +32,7 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item href="/{slug}">View</DropdownMenu.Item>
-		<DropdownMenu.Item href="/dashboard/editor/edit/{id}">Edit</DropdownMenu.Item>
+		<DropdownMenu.Item href="/_edit/{id}">Edit</DropdownMenu.Item>
 		<DropdownMenu.Item on:click={() => {dropOpen = false; diagOpen = true;}}>Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

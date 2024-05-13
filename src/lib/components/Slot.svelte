@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { type Component, EMPTY } from '$lib/dynamicSlot';
+	import { type Context, EMPTY, slotIdAppend } from '$lib/dynamicSlot';
 	import Render from '$lib/components/Render.svelte';
 
-	export let slots: Map<string, Component>;
+	export let ctx: Context;
 	export let name: string;
 
-	$: component = slots.get(name) || EMPTY;
+	$: component = ctx.slots[name] || EMPTY;
 </script>
 
-<Render {component} />
+<Render slotId={slotIdAppend(name, ctx.slotId)} editor={ctx.editor} {component} />
