@@ -6,6 +6,7 @@
 	import { siteConfig } from '$lib/siteConfig';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { page } from "$app/stores";
+	import { cn } from '$lib/utils';
 
 	let open = false;
 </script>
@@ -25,12 +26,18 @@
 			<p class="font-bold block">{siteConfig.name}</p>
 		</MobileLink>
 		<ScrollArea orientation="both" class="my-4 h-[calc(100vh-8rem)] pb-10">
-			{#if $page.data.user}
-				<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
-				<MobileLink href="/logout" bind:open class="text-foreground">Log out</MobileLink>
-			{:else}
-				<MobileLink href="/login" bind:open class="text-foreground">Log in</MobileLink>
-			{/if}
+			<div class="flex flex-col space-y-3">
+				{#each $page.data.pages as p}
+					<MobileLink href="/{p.slug}" bind:open class="text-foreground">{p.name}</MobileLink>
+				{/each}
+				<MobileLink href="/policies" bind:open class="text-foreground">Policies</MobileLink>
+				{#if $page.data.user}
+					<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
+					<MobileLink href="/logout" bind:open class="text-foreground">Log out</MobileLink>
+				{:else}
+					<MobileLink href="/login" bind:open class="text-foreground">Log in</MobileLink>
+				{/if}
+			</div>
 		</ScrollArea>
 	</Sheet.Content>
 </Sheet.Root>

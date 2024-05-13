@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { siteConfig } from '$lib/siteConfig';
 	import { page } from '$app/stores';
+	import { cn } from '$lib/utils';
 </script>
 
 <div class="mr-4 hidden md:flex">
@@ -11,7 +12,10 @@
 	</a>
 
 	<nav class="flex items-center gap-6 text-sm">
-
+		{#each $page.data.pages as p}
+			<a class={cn("transition-colors hover:text-foreground/80", $page.url.pathname === `/${p.slug}` ? "text-foreground" : "text-foreground/60")} href="/{p.slug}">{p.name}</a>
+		{/each}
+		<a class={cn("transition-colors hover:text-foreground/80", $page.url.pathname === `/policies` ? "text-foreground" : "text-foreground/60")} href="/policies">Policies</a>
 	</nav>
 </div>
 

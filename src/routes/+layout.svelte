@@ -6,7 +6,7 @@
 </script>
 
 <ModeWatcher track={false} defaultMode={"dark"} />
-<Toaster />
+<Toaster richColors />
 <Metadata />
 
 <div class="relative flex min-h-screen flex-col bg-background">
