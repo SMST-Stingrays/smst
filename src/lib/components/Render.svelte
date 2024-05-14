@@ -16,21 +16,16 @@
 		[EMPTY.componentId, Empty]
 	]);
 
-	let props = {};
-	for (let [k, v] of component.props) {
-		props[k] = v;
-	}
-
 	let activeComponent = availComponents.get(component.componentId);
 </script>
 
 {#if activeComponent}
-	<svelte:component this={activeComponent} {...props} slots={component.slots} />
+	<svelte:component this={activeComponent} {...component.props} slots={component.slots} />
 {:else}
 	{#if SELF_CLOSING_TAGS.includes(component.componentId)}
-		<svelte:element this={component.componentId} {...props}/>
+		<svelte:element this={component.componentId} {...component.props}/>
 	{:else}
-		<svelte:element this={component.componentId} {...props}>
+		<svelte:element this={component.componentId} {...component.props}>
 			{#each component.slots as [k, v]}
 				{#if k === DEFAULT_SLOT}
 					<svelte:self component={v}></svelte:self>
