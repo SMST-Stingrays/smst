@@ -5,10 +5,12 @@
 	import type { PageData } from "./$types";
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Resizable from "$lib/components/ui/resizable";
-	import { type Component, editorComponents, type EditorComponentSpec } from '$lib/dynamicSlot';
+	import { type Component, editorComponents, type EditorComponentSpec, type PageTree } from '$lib/dynamicSlot';
 	import Render from '$lib/components/Render.svelte';
 	import { Label } from '$lib/components/ui/label';
 	import { Input } from '$lib/components/ui/input';
+	import { toast } from 'svelte-sonner';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -43,6 +45,24 @@
 		root = root;
 	}
 
+	async function save() {
+		let data = new URLSearchParams();
+		let pr: PageTree = {
+			components: root
+		};
+		data.set("data", JSON.stringify(pr));
+		await fetch("?", {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: data.toString()
+		});
+		await invalidateAll();
+		await goto("/dashboard/editor");
+		toast.success("Page edited successfully!");
+	}
+
 	let selected: number | null = null;
 </script>
 
@@ -58,7 +78,7 @@
 						<DoorOpenIcon class="h-4 w-4" />
 						<span class="sr-only">Back to site</span>
 					</Button>
-					<Button variant="outline" size="icon" class="h-8 w-8">
+					<Button on:click={save} variant="outline" size="icon" class="h-8 w-8">
 						<SaveIcon class="h-4 w-4" />
 						<span class="sr-only">Save</span>
 					</Button>
