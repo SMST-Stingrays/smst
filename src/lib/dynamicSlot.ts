@@ -38,5 +38,26 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			"text": { default: "Your text here", type: ComponentPropType.ShortString }
 		},
 		slots: {}
+	},
+	"H2": {
+		name: "Heading 2",
+		props: {
+			"text": { default: "Your text here", type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	},
+	"H3": {
+		name: "Heading 3",
+		props: {
+			"text": { default: "Your text here", type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	},
+	"HTML": {
+		name: "HTML",
+		props: {
+			"src": { default: "<b>Source code here</b>", type: ComponentPropType.LongString }
+		},
+		slots: {}
 	}
 };

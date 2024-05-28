@@ -4,6 +4,8 @@
 	import Empty from '$lib/components/pageComponents/Empty.svelte';
 	import HTML from '$lib/components/pageComponents/HTML.svelte';
 	import TwoCols from '$lib/components/pageComponents/TwoCols.svelte';
+	import H2 from '$lib/components/pageComponents/H2.svelte';
+	import H3 from '$lib/components/pageComponents/H3.svelte';
 
 	export let component: Component;
 
@@ -11,6 +13,8 @@
 	// eslint-disable-next-line
 	const availComponents: Map<string, any> = new Map([
 		["H1", H1],
+		["H2", H2],
+		["H3", H3],
 		["HTML", HTML],
 		["TwoCols", TwoCols],
 		[EMPTY.componentId, Empty]
