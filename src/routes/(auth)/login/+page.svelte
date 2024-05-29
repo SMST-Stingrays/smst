@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { Input } from "$lib/components/ui/input/index.js";
-	import { Label } from "$lib/components/ui/label/index.js";
+	import type { PageData } from "./$types";
+	import LoginForm from './LoginForm.svelte';
+
+	export let data: PageData;
 </script>
 
 <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -19,28 +20,13 @@
 			<div class="grid gap-2 text-center">
 				<h1 class="text-3xl font-bold">Login</h1>
 				<p class="text-balance text-muted-foreground">
-					Enter your credentials below to login to your account
+					Log into your account with the SMST Stingrays.
 				</p>
 			</div>
-			<div class="grid gap-4">
-				<div class="grid gap-2">
-					<Label for="username">Username</Label>
-					<Input id="username" type="username" placeholder="john.doe" required />
-				</div>
-				<div class="grid gap-2">
-					<div class="flex items-center">
-						<Label for="password">Password</Label>
-						<a href="/login/forgot" class="ml-auto inline-block text-sm underline">
-							Forgot your password?
-						</a>
-					</div>
-					<Input id="password" type="password" required />
-				</div>
-				<Button type="submit" class="w-full">Login</Button>
-			</div>
+			<LoginForm data={data.form} />
 			<div class="mt-4 text-center text-sm">
-				Don&apos;t have an account?
-				<a href="/register" class="underline"> Sign up </a>
+				Don't have an account?
+				<a href="/register" class="underline"> Register </a>
 			</div>
 			<div class="text-center text-sm">
 				<a href="/" class="underline underline-offset-4 font-semibold">&larr; Go back home</a>

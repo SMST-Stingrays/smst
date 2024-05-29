@@ -37,6 +37,7 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "5.13.0",
+		"@unpic/svelte": "^0.0.53",
 		"argon2": "^0.40.1",
 		"bits-ui": "^0.21.7",
 		"clsx": "^2.1.1",

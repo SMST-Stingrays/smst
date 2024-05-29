@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
-	import * as Dialog from "$lib/components/ui/dialog";
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { ChevronDown, ChevronUp, DoorOpenIcon, PlusIcon, SaveIcon } from 'lucide-svelte';
-	import type { PageData } from "./$types";
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as Resizable from "$lib/components/ui/resizable";
+	import type { PageData } from './$types';
 	import { type Component, editorComponents, type EditorComponentSpec, type PageTree } from '$lib/dynamicSlot';
 	import Render from '$lib/components/Render.svelte';
 	import { Label } from '$lib/components/ui/label';
 	import { Input } from '$lib/components/ui/input';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
+	import * as Resizable from "$lib/components/ui/resizable";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 
 	export let data: PageData;
 
@@ -43,6 +42,20 @@
 		console.log(root);
 
 		root = root;
+	}
+
+	function rm(i: number) {
+		return () => {
+			selected = null;
+			let copy = root;
+			root = [];
+			for (let [li, v] of copy.entries()) {
+				if (li !== i) {
+					root.push(v);
+				}
+			}
+			root = root;
+		};
 	}
 
 	async function save() {
@@ -133,16 +146,20 @@
 					<div class="mx-2 my-1">
 						<p class="text-sm text-muted-foreground font-bold mb-3">Properties</p>
 
-						{#if selected !== null}
-							<p class="text-sm">Selected: #{selected} {root[selected].componentId}</p>
+						<div class="space-y-2">
+							{#if selected !== null}
+								<p class="text-sm">Selected: #{selected} {root[selected].componentId}</p>
 
-							{#each Object.entries(root[selected].props) as [k, v]}
-								<Label for={k}>{k}</Label>
-								<Input id={k} bind:value={root[selected].props[k]} />
-							{/each}
-						{:else}
-							<p class="text-sm">Nothing selected, select something in the tree above to edit it</p>
-						{/if}
+								{#each Object.entries(root[selected].props) as [k, v]}
+									<Label for={k}>{k}</Label>
+									<Input id={k} bind:value={root[selected].props[k]} />
+								{/each}
+
+								<Button on:click={rm(selected)} variant="destructive">Delete</Button>
+							{:else}
+								<p class="text-sm">Nothing selected, select something in the tree above to edit it</p>
+							{/if}
+						</div>
 					</div>
 				</Resizable.Pane>
 			</Resizable.PaneGroup>

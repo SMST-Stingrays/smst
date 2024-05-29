@@ -59,5 +59,37 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			"src": { default: "<b>Source code here</b>", type: ComponentPropType.LongString }
 		},
 		slots: {}
-	}
+	},
+	"HeroImg": {
+		name: "Hero Image",
+		props: {
+			"url": { default: "https://content.gosmst.com/images/5e9e7ae2-3b25-4c09-ad34-8d0c1ab74e86.jpg", type: ComponentPropType.ShortString },
+			"alt": { default: "Hero Image", type: ComponentPropType.ShortString },
+			"heroText": { default: "Title Text", type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	},
+	"Paragraph": {
+		name: "Paragraph",
+		props: {
+			"src": { default: "Content Here", type: ComponentPropType.LongString }
+		},
+		slots: {}
+	},
+	"ImgParagraphLeft": {
+		name: "Image Paragraph (Left)",
+		props: {
+			"url": { default: "https://content.gosmst.com/images/5e9e7ae2-3b25-4c09-ad34-8d0c1ab74e86.jpg", type: ComponentPropType.ShortString },
+			"alt": { default: "Description Image", type: ComponentPropType.ShortString },
+			"src": { default: "Your Content Goes Here!", type: ComponentPropType.LongString }
+		},
+		slots: {}
+	},
+	"Separator": {
+		name: "Separator",
+		props: {
+			"text": { default: "Your text here", type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	},
 };

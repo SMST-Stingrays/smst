@@ -6,6 +6,10 @@
 	import TwoCols from '$lib/components/pageComponents/TwoCols.svelte';
 	import H2 from '$lib/components/pageComponents/H2.svelte';
 	import H3 from '$lib/components/pageComponents/H3.svelte';
+	import HeroImg from '$lib/components/pageComponents/HeroImg.svelte';
+	import Paragraph from '$lib/components/pageComponents/Paragraph.svelte';
+	import ImgParagraphLeft from '$lib/components/pageComponents/ImgParagraphLeft.svelte';
+	import Separator from '$lib/components/pageComponents/Separator.svelte';
 
 	export let component: Component;
 
@@ -17,13 +21,19 @@
 		["H3", H3],
 		["HTML", HTML],
 		["TwoCols", TwoCols],
+		["HeroImg", HeroImg],
+		["Paragraph", Paragraph],
+		["ImgParagraphLeft", ImgParagraphLeft],
+		["Separator", Separator],
 		[EMPTY.componentId, Empty]
 	]);
+
+	console.log(component);
 
 	let activeComponent = availComponents.get(component.componentId);
 </script>
 
-{#if activeComponent}
+{#if component && activeComponent}
 	<svelte:component this={activeComponent} {...component.props} slots={component.slots} />
 {:else}
 	{#if SELF_CLOSING_TAGS.includes(component.componentId)}
