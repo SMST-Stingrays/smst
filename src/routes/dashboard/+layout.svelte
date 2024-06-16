@@ -17,9 +17,9 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import { siteConfig } from '$lib/siteConfig';
-	import { EditIcon, GlobeIcon, HomeIcon, LogOutIcon } from 'lucide-svelte';
+	import { EditIcon, GlobeIcon, HomeIcon, LogOutIcon, GavelIcon } from 'lucide-svelte';
 	import { page } from "$app/stores";
-	import { EDITOR, VISITOR } from '$lib/permissions';
+	import { EDITOR, VISITOR, ADMIN } from '$lib/permissions';
 
 	let dashboardPages: { icon: any, name: string, href: string, visible: boolean }[] = [
 		{
@@ -33,6 +33,12 @@
 			name: 'Page Editor',
 			href: '/dashboard/editor',
 			visible: $page.data.user?.permissionLevel >= EDITOR
+		},
+		{
+		    icon: GavelIcon,
+			name: 'Policies',
+			href: '/dashboard/policies',
+			visible: $page.data.user?.permissionLevel >= ADMIN
 		}
 	];
 </script>
