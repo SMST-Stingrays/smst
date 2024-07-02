@@ -1,18 +1,18 @@
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/db';
 
-export const load: PageServerLoad = async ({params}) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const page = await prisma.page.findUnique({
 		where: {
-			slug: params.slug,
+			slug: params.slug
 		}
 	});
 
 	if (!page) {
 		return {
-			title: "Page not found",
+			title: 'Page not found',
 			page: null
-		}
+		};
 	} else {
 		return {
 			title: page.name,
@@ -22,6 +22,6 @@ export const load: PageServerLoad = async ({params}) => {
 				createdAt: page.createdAt,
 				updatedAt: page.updatedAt
 			}
-		}
+		};
 	}
 };

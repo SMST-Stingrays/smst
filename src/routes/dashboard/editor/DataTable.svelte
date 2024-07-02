@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Page } from "@prisma/client";
+	import type { Page } from '@prisma/client';
 	import { writable } from 'svelte/store';
 	import { createRender, createTable } from 'svelte-headless-table';
 	import { Subscribe } from 'svelte-headless-table';
 	import { Render } from 'svelte-headless-table';
-	import * as Table from "$lib/components/ui/table";
+	import * as Table from '$lib/components/ui/table';
 	import DataTableActions from './DataTableActions.svelte';
 
 	export let data: Page[];
@@ -15,22 +15,23 @@
 	const table = createTable(store);
 	const columns = table.createColumns([
 		table.column({
-			accessor: "name",
-			header: "Name"
+			accessor: 'name',
+			header: 'Name'
 		}),
 		table.column({
-			accessor: "slug",
-			header: "Slug"
+			accessor: 'slug',
+			header: 'Slug'
 		}),
 		table.column({
-			accessor: ({id, slug}) => {return {id, slug}},
-			header: "",
-			cell: ({value}) => createRender(DataTableActions, value)
+			accessor: ({ id, slug }) => {
+				return { id, slug };
+			},
+			header: '',
+			cell: ({ value }) => createRender(DataTableActions, value)
 		})
 	]);
 
-	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } =
-		table.createViewModel(columns);
+	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = table.createViewModel(columns);
 </script>
 
 <div class="rounded-lg border shadow-sm">

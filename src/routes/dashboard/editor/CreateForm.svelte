@@ -23,7 +23,7 @@
 	const { form: formData, enhance, delayed } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" use:enhance action="?/create">
 	<div class="grid gap-4">
 		<Form.Field {form} name="name">
 			<Form.Control let:attrs>
@@ -38,9 +38,12 @@
 				<Input {...attrs} bind:value={$formData.slug} />
 			</Form.Control>
 			<Form.Description>
-				A unique identifier used as the link to this page. <b>Leave blank</b> to set as the homepage.
+				A unique identifier used as the link to this page. <b>Leave blank</b> to set as the
+				homepage.
 				{#if $formData.name}
-					Use <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mr-0.5">
+					Use <code
+						class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mr-0.5"
+					>
 						{$formData.name.toLowerCase().replace(' ', '_')}
 					</code> if you don't know what to pick.
 				{/if}
@@ -57,4 +60,3 @@
 		</Form.Button>
 	</div>
 </form>
-

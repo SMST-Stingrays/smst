@@ -1,17 +1,17 @@
-import type { PageServerLoad, Actions } from "./$types";
-import { ADMIN } from '$lib/permissions';
+import type { PageServerLoad, Actions } from './$types';
+import { ADMIN, EDITOR } from '$lib/permissions';
 import { loadUser } from '$lib/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db';
-import { setError, superValidate } from 'sveltekit-superforms';
+import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
-import type { PageTree } from '$lib/dynamicSlot';
+import { updateFormSchema } from './updateFormSchema';
 
-export const load: PageServerLoad = async ({parent}) => {
+export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();
 	if (!user || user.permissionLevel < ADMIN) {
-		return redirect(307, "/dashboard");
+		return redirect(307, '/dashboard');
 	}
 
 	const policies = await prisma.policy.findMany({});
@@ -19,20 +19,21 @@ export const load: PageServerLoad = async ({parent}) => {
 	console.log(policies);
 
 	return {
-		title: "Policies",
+		title: 'Policies',
 		policies,
-		form: await superValidate(zod(formSchema))
-	}
-}
+		form: await superValidate(zod(formSchema)),
+		updateForm: await superValidate(zod(updateFormSchema))
+	};
+};
 
 export const actions: Actions = {
-	default: async (event) => {
-		let form = await superValidate(event, zod(formSchema));
+	create: async (event) => {
+		const form = await superValidate(event, zod(formSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		let user = await loadUser(event.cookies);
+		const user = await loadUser(event.cookies);
 		if (!user) {
 			return fail(401, { form });
 		}
@@ -47,5 +48,49 @@ export const actions: Actions = {
 				url: form.data.url
 			}
 		});
+
+		return { form };
+	},
+	update: async (event) => {
+		const form = await superValidate(event, zod(updateFormSchema));
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, { form });
+		}
+		if (user.permissionLevel < ADMIN) {
+			return fail(401, { form });
+		}
+
+		await prisma.policy.update({
+			where: {
+				id: form.data.id
+			},
+			data: {
+				code: form.data.code,
+				title: form.data.title,
+				url: form.data.url
+			}
+		});
+
+		return { form };
+	},
+	delete: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		await prisma.policy.delete({
+			where: {
+				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
+			}
+		});
 	}
-}
+};

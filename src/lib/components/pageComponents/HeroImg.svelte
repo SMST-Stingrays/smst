@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Image } from "@unpic/svelte";
+	import { Image } from '@unpic/svelte';
 
 	export let url;
 	export let alt;

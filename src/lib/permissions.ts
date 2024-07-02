@@ -1,5 +1,3 @@
-
-
 export const VISITOR = 0;
 export const MEMBER = 10;
 export const EDITOR = 20;

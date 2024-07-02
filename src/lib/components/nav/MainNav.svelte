@@ -13,20 +13,38 @@
 
 	<nav class="flex items-center gap-6 text-sm">
 		{#each $page.data.pages as p}
-			<a class={cn("transition-colors hover:text-foreground/80", $page.url.pathname === `/${p.slug}` ? "text-foreground" : "text-foreground/60")} href="/{p.slug}">{p.name}</a>
+			<a
+				class={cn(
+					'transition-colors hover:text-foreground/80',
+					$page.url.pathname === `/${p.slug}` ? 'text-foreground' : 'text-foreground/60'
+				)}
+				href="/{p.slug}">{p.name}</a
+			>
 		{/each}
-		<a class={cn("transition-colors hover:text-foreground/80", $page.url.pathname === `/policies` ? "text-foreground" : "text-foreground/60")} href="/policies">Policies</a>
+		<a
+			class={cn(
+				'transition-colors hover:text-foreground/80',
+				$page.url.pathname === `/policies` ? 'text-foreground' : 'text-foreground/60'
+			)}
+			href="/policies">Policies</a
+		>
 	</nav>
 </div>
 
 <div class="hidden md:flex md:flex-1 md:items-center md:space-x-2 md:justify-end">
 	<nav class="flex items-center gap-6 text-sm">
 		{#if $page.data.user}
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/dashboard">Dashboard</a>
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/logout">Log out</a>
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/dashboard"
+				>Dashboard</a
+			>
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/logout"
+				>Log out</a
+			>
 			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
 		{:else}
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/login">Login</a>
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/login"
+				>Login</a
+			>
 		{/if}
 	</nav>
 </div>

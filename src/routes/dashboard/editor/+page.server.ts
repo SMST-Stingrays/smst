@@ -1,4 +1,4 @@
-import type { PageServerLoad, Actions } from "./$types";
+import type { PageServerLoad, Actions } from './$types';
 import { EDITOR } from '$lib/permissions';
 import { loadUser } from '$lib/auth';
 import { fail, redirect } from '@sveltejs/kit';
@@ -8,29 +8,29 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
 import type { PageTree } from '$lib/dynamicSlot';
 
-export const load: PageServerLoad = async ({parent}) => {
-	let { user } = await parent();
+export const load: PageServerLoad = async ({ parent }) => {
+	const { user } = await parent();
 	if (!user || user.permissionLevel < EDITOR) {
-		return redirect(307, "/dashboard");
+		return redirect(307, '/dashboard');
 	}
 
-	let pages = await prisma.page.findMany({});
+	const pages = await prisma.page.findMany({});
 
 	return {
-		title: "Page Editor",
+		title: 'Page Editor',
 		pages,
 		form: await superValidate(zod(formSchema))
-	}
-}
+	};
+};
 
 export const actions: Actions = {
-	default: async (event) => {
-		let form = await superValidate(event, zod(formSchema));
+	create: async (event) => {
+		const form = await superValidate(event, zod(formSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		let user = await loadUser(event.cookies);
+		const user = await loadUser(event.cookies);
 		if (!user) {
 			return fail(401, { form });
 		}
@@ -39,7 +39,7 @@ export const actions: Actions = {
 		}
 
 		// check if the slug exists already
-		let existingSlug = await prisma.page.findUnique({
+		const existingSlug = await prisma.page.findUnique({
 			where: {
 				slug: form.data.slug
 			}
@@ -48,7 +48,7 @@ export const actions: Actions = {
 			return setError(form, 'slug', 'This slug is already in use.');
 		}
 
-		let pageData: PageTree = {
+		const pageData: PageTree = {
 			components: []
 		};
 
@@ -59,5 +59,22 @@ export const actions: Actions = {
 				data: JSON.stringify(pageData)
 			}
 		});
+
+		return { form };
+	},
+	delete: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		await prisma.page.delete({
+			where: {
+				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
+			}
+		});
 	}
-}
+};

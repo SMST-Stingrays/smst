@@ -5,7 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import * as Form from "$lib/components/ui/form";
+	import * as Form from '$lib/components/ui/form';
 	import { Loader2Icon } from 'lucide-svelte';
 
 	export let data: SuperValidated<Infer<FormSchema>>;
@@ -66,4 +66,3 @@
 		</Form.Button>
 	</div>
 </form>
-

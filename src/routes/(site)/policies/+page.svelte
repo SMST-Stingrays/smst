@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {PageData} from "./$types";
+	import type { PageData } from './$types';
 	import { Image } from '@unpic/svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import DataTable from './DataTable.svelte';

@@ -1,4 +1,4 @@
-import type { PageServerLoad, Actions } from "./$types";
+import type { PageServerLoad, Actions } from './$types';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
@@ -12,18 +12,17 @@ import { JWT_KEY } from '$env/static/private';
 export const load: PageServerLoad = async () => {
 	return {
 		form: await superValidate(zod(formSchema))
-	}
-}
+	};
+};
 
 export const actions: Actions = {
 	default: async (event) => {
-		console.log("here");
-		let form = await superValidate(event, zod(formSchema));
+		console.log('here');
+		const form = await superValidate(event, zod(formSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-
 
 		const existing_user = await prisma.user.findUnique({
 			where: {
@@ -42,15 +41,22 @@ export const actions: Actions = {
 				return setError(form, 'password', 'Incorrect password');
 			}
 
-			const token = jwt.sign({
-				id: existing_user.id
-			}, JWT_KEY);
+			const token = jwt.sign(
+				{
+					id: existing_user.id
+				},
+				JWT_KEY
+			);
 
-			event.cookies.set("token", token, {path: "/"});
+			event.cookies.set('token', token, { path: '/' });
 		} catch (e) {
-			return setError(form, 'password', 'There was an error processing your login. Please try again later.');
+			return setError(
+				form,
+				'password',
+				'There was an error processing your login. Please try again later.'
+			);
 		}
 
-		redirect(307, "/");
+		redirect(307, '/');
 	}
-}
+};

@@ -5,7 +5,7 @@
 	import MobileLink from '$lib/components/nav/MobileLink.svelte';
 	import { siteConfig } from '$lib/siteConfig';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
-	import { page } from "$app/stores";
+	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 
 	let open = false;
@@ -13,7 +13,11 @@
 
 <Sheet.Root bind:open>
 	<Sheet.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="ghost" class="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden flex">
+		<Button
+			builders={[builder]}
+			variant="ghost"
+			class="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden flex"
+		>
 			<MenuIcon class="h-5 w-5" />
 			<span class="sr-only">Toggle Menu</span>
 			<span class="md:hidden font-bold sm:inline-block text-p ml-2">

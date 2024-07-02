@@ -1,11 +1,11 @@
 <script>
-	import "../app.pcss";
+	import '../app.pcss';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { ModeWatcher } from 'mode-watcher';
 	import Metadata from '$lib/components/Metadata.svelte';
 </script>
 
-<ModeWatcher track={false} defaultMode={"dark"} />
+<ModeWatcher track={false} defaultMode={'dark'} />
 <Toaster richColors />
 <Metadata />
 

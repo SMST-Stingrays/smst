@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { Input } from "$lib/components/ui/input/index.js";
-	import { Label } from "$lib/components/ui/label/index.js";
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { Label } from '$lib/components/ui/label/index.js';
 </script>
 
 <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -19,7 +19,8 @@
 			<div class="grid gap-2 text-center">
 				<h1 class="text-3xl font-bold">Forgot your password?</h1>
 				<p class="text-balance text-muted-foreground">
-					If you have forgotten the password to your account, contact team leadership and they can reset it for you.
+					If you have forgotten the password to your account, contact team leadership and they can
+					reset it for you.
 				</p>
 			</div>
 			<div class="text-center text-sm">

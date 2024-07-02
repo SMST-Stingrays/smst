@@ -2,14 +2,19 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { ChevronDown, ChevronUp, DoorOpenIcon, PlusIcon, SaveIcon } from 'lucide-svelte';
 	import type { PageData } from './$types';
-	import { type Component, editorComponents, type EditorComponentSpec, type PageTree } from '$lib/dynamicSlot';
+	import {
+		type Component,
+		editorComponents,
+		type EditorComponentSpec,
+		type PageTree
+	} from '$lib/dynamicSlot';
 	import Render from '$lib/components/Render.svelte';
 	import { Label } from '$lib/components/ui/label';
 	import { Input } from '$lib/components/ui/input';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidateAll } from '$app/navigation';
-	import * as Resizable from "$lib/components/ui/resizable";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+	import * as Resizable from '$lib/components/ui/resizable';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
 	export let data: PageData;
 
@@ -63,17 +68,17 @@
 		let pr: PageTree = {
 			components: root
 		};
-		data.set("data", JSON.stringify(pr));
-		await fetch("?", {
+		data.set('data', JSON.stringify(pr));
+		await fetch('?', {
 			method: 'POST',
 			headers: {
-				"Content-Type": "application/x-www-form-urlencoded"
+				'Content-Type': 'application/x-www-form-urlencoded'
 			},
 			body: data.toString()
 		});
 		await invalidateAll();
-		await goto("/dashboard/editor");
-		toast.success("Page edited successfully!");
+		await goto('/dashboard/editor');
+		toast.success('Page edited successfully!');
 	}
 
 	let selected: number | null = null;
@@ -87,7 +92,13 @@
 					<span class="">Editing - {data.page.name}</span>
 				</a>
 				<div class="ml-auto flex flex-row space-x-2">
-					<Button href="/dashboard/editor" label="Back to site" variant="outline" size="icon" class="h-8 w-8">
+					<Button
+						href="/dashboard/editor"
+						label="Back to site"
+						variant="outline"
+						size="icon"
+						class="h-8 w-8"
+					>
 						<DoorOpenIcon class="h-4 w-4" />
 						<span class="sr-only">Back to site</span>
 					</Button>
@@ -104,12 +115,19 @@
 					<div class="grid items-start px-2 text-sm font-medium lg:px-4">
 						<div class="flex flex-row">
 							<div class="flex flex-row space-x-2">
-								<Button on:click={() => {treeRootCollapsed = !treeRootCollapsed;}} variant="ghost" size="icon" class="ml-auto h-6 w-6">
+								<Button
+									on:click={() => {
+										treeRootCollapsed = !treeRootCollapsed;
+									}}
+									variant="ghost"
+									size="icon"
+									class="ml-auto h-6 w-6"
+								>
 									{#if treeRootCollapsed}
 										<ChevronUp class="h-4 w-4" />
 										<span class="sr-only">Expand</span>
 									{:else}
-										<ChevronDown class="h-4 w-4"/>
+										<ChevronDown class="h-4 w-4" />
 										<span class="sr-only">Collapse</span>
 									{/if}
 								</Button>
@@ -117,7 +135,15 @@
 							</div>
 							<DropdownMenu.Root>
 								<DropdownMenu.Trigger asChild let:builder>
-									<Button on:click={() => {treeRootCollapsed = false;}} builders={[builder]} variant="ghost" size="icon" class="ml-auto h-6 w-6">
+									<Button
+										on:click={() => {
+											treeRootCollapsed = false;
+										}}
+										builders={[builder]}
+										variant="ghost"
+										size="icon"
+										class="ml-auto h-6 w-6"
+									>
 										<PlusIcon class="h-4 w-4" />
 										<span class="sr-only">Back to site</span>
 									</Button>
@@ -126,7 +152,11 @@
 									<DropdownMenu.Label>Add Component</DropdownMenu.Label>
 									<DropdownMenu.Separator />
 									{#each Object.entries(editorComponents) as [id, component]}
-										<DropdownMenu.Item on:click={() => {addComponentToRoot(id, component)}}>{component.name}</DropdownMenu.Item>
+										<DropdownMenu.Item
+											on:click={() => {
+												addComponentToRoot(id, component);
+											}}>{component.name}</DropdownMenu.Item
+										>
 									{/each}
 								</DropdownMenu.Content>
 							</DropdownMenu.Root>
@@ -135,7 +165,13 @@
 						<div class="flex flex-col">
 							{#if !treeRootCollapsed}
 								{#each root as c, i}
-									<button on:click={() => {selected = i;}} class="text-left align-top text-sm hover:bg-muted transition-colors px-3 py-1 ml-8" class:bg-muted={selected === i}>{c.componentId}</button>
+									<button
+										on:click={() => {
+											selected = i;
+										}}
+										class="text-left align-top text-sm hover:bg-muted transition-colors px-3 py-1 ml-8"
+										class:bg-muted={selected === i}>{c.componentId}</button
+									>
 								{/each}
 							{/if}
 						</div>
@@ -157,7 +193,9 @@
 
 								<Button on:click={rm(selected)} variant="destructive">Delete</Button>
 							{:else}
-								<p class="text-sm">Nothing selected, select something in the tree above to edit it</p>
+								<p class="text-sm">
+									Nothing selected, select something in the tree above to edit it
+								</p>
 							{/if}
 						</div>
 					</div>

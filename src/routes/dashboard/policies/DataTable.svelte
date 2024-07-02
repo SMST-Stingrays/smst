@@ -1,13 +1,16 @@
 <script lang="ts">
-	import type { Policy } from "@prisma/client";
+	import type { Policy } from '@prisma/client';
 	import { writable } from 'svelte/store';
 	import { createRender, createTable } from 'svelte-headless-table';
 	import { Subscribe } from 'svelte-headless-table';
 	import { Render } from 'svelte-headless-table';
-	import * as Table from "$lib/components/ui/table";
+	import * as Table from '$lib/components/ui/table';
 	import DataTableActions from './DataTableActions.svelte';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
+	import type { UpdateFormSchema } from './updateFormSchema';
 
 	export let data: Policy[];
+	export let fData: SuperValidated<Infer<UpdateFormSchema>>;
 
 	let store = writable(data);
 	$: $store = data;
@@ -15,22 +18,23 @@
 	const table = createTable(store);
 	const columns = table.createColumns([
 		table.column({
-			accessor: "code",
-			header: "ID"
+			accessor: 'code',
+			header: 'ID'
 		}),
 		table.column({
-			accessor: "title",
-			header: "Title"
+			accessor: 'title',
+			header: 'Title'
 		}),
 		table.column({
-			accessor: ({id, url}) => {return {id, url}},
-			header: "",
-			cell: ({value}) => createRender(DataTableActions, value)
+			accessor: ({ id, url, code, title }) => {
+				return { id, url, code, title, data: fData };
+			},
+			header: '',
+			cell: ({ value }) => createRender(DataTableActions, value)
 		})
 	]);
 
-	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } =
-		table.createViewModel(columns);
+	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = table.createViewModel(columns);
 </script>
 
 <div class="rounded-lg border shadow-sm">
