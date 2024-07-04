@@ -5,8 +5,8 @@ import { formSchema } from './schema';
 import { fail, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db';
 import { VISITOR } from '$lib/permissions';
-import jwt from 'jsonwebtoken';
 import { JWT_KEY } from '$env/static/private';
+import { nanoid } from 'nanoid';
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -40,12 +40,13 @@ export const actions: Actions = {
 				return setError(form, 'password', 'Incorrect password');
 			}
 
-			const token = jwt.sign(
-				{
-					id: existing_user.id
-				},
-				JWT_KEY
-			);
+			const token = nanoid();
+			await prisma.token.create({
+				data: {
+					userId: user.id,
+					id: token
+				}
+			});
 
 			event.cookies.set('token', token, { path: '/' });
 		} catch (e) {
