@@ -4,8 +4,10 @@ import ws from 'ws'
 import { DATABASE_URL } from '$env/static/private';
 import { PrismaNeon } from '@prisma/adapter-neon';
 
-neonConfig.webSocketConstructor = ws;
-const pool = new Pool({ connectionString: DATABASE_URL });
-const adapter = new PrismaNeon(pool);
+export function prisma() {
+	neonConfig.webSocketConstructor = ws;
+	const pool = new Pool({ connectionString: DATABASE_URL });
+	const adapter = new PrismaNeon(pool);
 
-export const prisma = new PrismaClient({ adapter });
+	return new PrismaClient({ adapter });
+}

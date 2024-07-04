@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const policies = await prisma.policy.findMany({});
+	const policies = await prisma().policy.findMany({});
 
 	console.log(policies);
 
@@ -41,7 +41,7 @@ export const actions: Actions = {
 			return fail(401, { form });
 		}
 
-		await prisma.policy.create({
+		await prisma().policy.create({
 			data: {
 				code: form.data.code,
 				title: form.data.title,
@@ -65,7 +65,7 @@ export const actions: Actions = {
 			return fail(401, { form });
 		}
 
-		await prisma.policy.update({
+		await prisma().policy.update({
 			where: {
 				id: form.data.id
 			},
@@ -87,7 +87,7 @@ export const actions: Actions = {
 			return fail(401, {});
 		}
 
-		await prisma.policy.delete({
+		await prisma().policy.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}

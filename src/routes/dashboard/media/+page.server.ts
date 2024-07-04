@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const media = await prisma.media.findMany({});
+	const media = await prisma().media.findMany({});
 
 	return {
 		title: 'Media',
@@ -54,7 +54,7 @@ export const actions: Actions = {
 		});
 
 		await S3.send(command);
-		await prisma.media.create({
+		await prisma().media.create({
 			data: {
 				type: form.data.type,
 				title: file.name,
@@ -73,7 +73,7 @@ export const actions: Actions = {
 			return fail(401, {});
 		}
 
-		await prisma.media.delete({
+		await prisma().media.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}

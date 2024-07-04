@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ params, parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const page = await prisma.page.findUnique({
+	const page = await prisma().page.findUnique({
 		where: {
 			id: Number.parseInt(params.id)
 		}
@@ -35,7 +35,7 @@ export const actions: Actions = {
 		const data = await event.request.formData();
 		const newData = data.get('data')!;
 		const newDataJ = JSON.parse(newData.toString());
-		await prisma.page.update({
+		await prisma().page.update({
 			where: {
 				id: Number.parseInt(event.params.id)
 			},

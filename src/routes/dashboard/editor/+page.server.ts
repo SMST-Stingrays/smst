@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const pages = await prisma.page.findMany({});
+	const pages = await prisma().page.findMany({});
 
 	return {
 		title: 'Page Editor',
@@ -39,7 +39,7 @@ export const actions: Actions = {
 		}
 
 		// check if the slug exists already
-		const existingSlug = await prisma.page.findUnique({
+		const existingSlug = await prisma().page.findUnique({
 			where: {
 				slug: form.data.slug
 			}
@@ -52,7 +52,7 @@ export const actions: Actions = {
 			components: []
 		};
 
-		await prisma.page.create({
+		await prisma().page.create({
 			data: {
 				name: form.data.name,
 				slug: form.data.slug,
@@ -71,7 +71,7 @@ export const actions: Actions = {
 			return fail(401, {});
 		}
 
-		await prisma.page.delete({
+		await prisma().page.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}

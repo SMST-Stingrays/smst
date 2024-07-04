@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/db';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const page = await prisma.page.findUnique({
+	const page = await prisma().page.findUnique({
 		where: {
 			slug: params.slug
 		}

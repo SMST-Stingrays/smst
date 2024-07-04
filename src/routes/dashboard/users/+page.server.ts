@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const users = await prisma.user.findMany({});
+	const users = await prisma().user.findMany({});
 
 	return {
 		title: 'Users',
@@ -42,7 +42,7 @@ export const actions: Actions = {
 			return fail(401, { form });
 		}
 
-		await prisma.user.create({
+		await prisma().user.create({
 			data: {
 				first_name: form.data.first_name,
 				last_name: form.data.last_name,
@@ -68,7 +68,7 @@ export const actions: Actions = {
 			return fail(401, { form });
 		}
 
-		await prisma.user.update({
+		await prisma().user.update({
 			where: {
 				id: form.data.id
 			},
@@ -98,7 +98,7 @@ export const actions: Actions = {
 
 		console.log(form.data);
 
-		await prisma.user.update({
+		await prisma().user.update({
 			where: {
 				id: form.data.id
 			},
@@ -118,7 +118,7 @@ export const actions: Actions = {
 			return fail(401, {});
 		}
 
-		await prisma.user.delete({
+		await prisma().user.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}

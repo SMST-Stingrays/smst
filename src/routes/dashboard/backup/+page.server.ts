@@ -31,10 +31,10 @@ export const load: PageServerLoad = async ({ parent }) => {
 			s3_endpoint: S3_ENDPOINT,
 			s3_region: S3_REGION
 		},
-		media: await prisma.media.findMany(),
-		pages: await prisma.page.findMany(),
-		policies: await prisma.policy.findMany(),
-		users: await prisma.user.findMany(),
+		media: await prisma().media.findMany(),
+		pages: await prisma().page.findMany(),
+		policies: await prisma().policy.findMany(),
+		users: await prisma().user.findMany(),
 	};
 
 	return {
@@ -76,33 +76,33 @@ export const actions: Actions = {
 		console.log("loading backup");
 		console.log(json_str);
 
-		await prisma.page.deleteMany();
+		await prisma().page.deleteMany();
 		for (const p of json_str.pages) {
-			await prisma.page.create({
+			await prisma().page.create({
 				data: p
 			});
 		}
 
-		await prisma.policy.deleteMany();
+		await prisma().policy.deleteMany();
 		for (const p of json_str.policies) {
-			await prisma.policy.create({
+			await prisma().policy.create({
 				data: p
 			});
 			console.log(p);
 		}
 
-		await prisma.token.deleteMany();
-		await prisma.user.deleteMany();
+		await prisma().token.deleteMany();
+		await prisma().user.deleteMany();
 		for (const p of json_str.users) {
-			await prisma.user.create({
+			await prisma().user.create({
 				data: p
 			});
 			console.log(p);
 		}
 
-		await prisma.media.deleteMany();
+		await prisma().media.deleteMany();
 		for (const p of json_str.media) {
-			await prisma.media.create({
+			await prisma().media.create({
 				data: p
 			});
 			console.log(p);

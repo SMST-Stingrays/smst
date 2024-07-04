@@ -24,7 +24,7 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		const existing_user = await prisma.user.findUnique({
+		const existing_user = await prisma().user.findUnique({
 			where: {
 				username: form.data.username
 			}
@@ -42,7 +42,7 @@ export const actions: Actions = {
 			}
 
 			const token = nanoid();
-			await prisma.token.create({
+			await prisma().token.create({
 				data: {
 					userId: existing_user.id,
 					id: token

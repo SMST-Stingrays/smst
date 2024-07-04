@@ -5,7 +5,7 @@ import { prisma } from '$lib/db';
 export async function loadUser(cookies: Cookies): Promise<User | null> {
 	const token = cookies.get('token');
 	if (token) {
-		const token2 = await prisma.token.findUnique({
+		const token2 = await prisma().token.findUnique({
 			where: {
 				id: token
 			},

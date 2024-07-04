@@ -29,7 +29,7 @@ export const actions: Actions = {
 			return setError(form, 'password', 'The passwords do not match');
 		}
 
-		const existing_user = await prisma.user.findUnique({
+		const existing_user = await prisma().user.findUnique({
 			where: {
 				username: form.data.username
 			}
@@ -42,7 +42,7 @@ export const actions: Actions = {
 		try {
 			const p_hash = hashSync(form.data.password, 8);
 
-			const user = await prisma.user.create({
+			const user = await prisma().user.create({
 				data: {
 					username: form.data.username,
 					password: p_hash,
@@ -53,7 +53,7 @@ export const actions: Actions = {
 			});
 
 			const token = nanoid();
-			await prisma.token.create({
+			await prisma().token.create({
 				data: {
 					userId: user.id,
 					id: token
