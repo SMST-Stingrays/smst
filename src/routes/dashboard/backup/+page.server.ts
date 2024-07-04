@@ -67,6 +67,7 @@ export const actions: Actions = {
 		];
 		for (const vari of vars) {
 			if (vari[0] != vari[1]) {
+				console.log("bailing! variables do not match in backup");
 				return fail(499);
 			}
 		}
@@ -75,33 +76,33 @@ export const actions: Actions = {
 		console.log("loading backup");
 		console.log(json_str);
 
-		prisma.page.deleteMany();
+		await prisma.page.deleteMany();
 		for (const p of json_str.pages) {
-			prisma.page.create({
+			await prisma.page.create({
 				data: p
 			});
-			console.log(p);
 		}
 
-		prisma.policy.deleteMany();
+		await prisma.policy.deleteMany();
 		for (const p of json_str.policies) {
-			prisma.policy.create({
+			await prisma.policy.create({
 				data: p
 			});
 			console.log(p);
 		}
 
-		prisma.user.deleteMany();
+		await prisma.token.deleteMany();
+		await prisma.user.deleteMany();
 		for (const p of json_str.users) {
-			prisma.user.create({
+			await prisma.user.create({
 				data: p
 			});
 			console.log(p);
 		}
 
-		prisma.media.deleteMany();
+		await prisma.media.deleteMany();
 		for (const p of json_str.media) {
-			prisma.media.create({
+			await prisma.media.create({
 				data: p
 			});
 			console.log(p);

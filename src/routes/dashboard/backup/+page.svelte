@@ -54,7 +54,8 @@
 			method: "POST",
 			body: req.toString(),
 			headers: {
-				"Content-Type":"application/x-www-form-urlencoded"
+				"Content-Type":"application/x-www-form-urlencoded",
+				"Cookie": document.cookie
 			}
 		});
 		await invalidateAll();

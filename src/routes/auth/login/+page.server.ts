@@ -34,7 +34,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const valid = await Bun.password.verify(existing_user.password, form.data.password);
+			const valid = await Bun.password.verify(form.data.password, existing_user.password);
 
 			if (!valid) {
 				return setError(form, 'password', 'Incorrect password');
@@ -43,7 +43,7 @@ export const actions: Actions = {
 			const token = nanoid();
 			await prisma.token.create({
 				data: {
-					userId: user.id,
+					userId: existing_user.id,
 					id: token
 				}
 			});

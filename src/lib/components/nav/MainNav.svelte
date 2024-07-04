@@ -14,7 +14,8 @@
 	</a>
 
 	<nav class="flex items-center gap-6 text-sm">
-		{#each $page.data.pages as p}
+		{#if $page.data.pages}
+			{#each $page.data.pages as p}
 			<a
 				class={cn(
 					'transition-colors hover:text-foreground/80',
@@ -22,7 +23,8 @@
 				)}
 				href="/{p.slug}">{p.name}</a
 			>
-		{/each}
+			{/each}
+		{/if}
 		<a
 			class={cn(
 				'transition-colors hover:text-foreground/80',
