@@ -6,6 +6,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import * as Form from '$lib/components/ui/form';
+	import * as Alert from "$lib/components/ui/alert";
 	import { Loader2Icon } from 'lucide-svelte';
 
 	export let data: SuperValidated<Infer<FormSchema>>;
@@ -21,6 +22,8 @@
 	});
 
 	const { form: formData, enhance, delayed } = form;
+
+	let reservedSlugs = ["_edit", "auth", "dashboard", "policies"];
 </script>
 
 <form method="POST" use:enhance action="?/create">
@@ -51,7 +54,14 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Button class="w-full">
+		{#if reservedSlugs.includes($formData.slug.split("/")[0])}
+			<Alert.Root class="bg-slate-900">
+				<Alert.Title>Reserved page slug</Alert.Title>
+				<Alert.Description>That slug cannot be used. The following names are reserved for the site framework: /_edit, /auth, and /dashboard.</Alert.Description>
+			</Alert.Root>
+		{/if}
+
+		<Form.Button disabled={reservedSlugs.includes($formData.slug.split("/")[0])} class="w-full">
 			{#if $delayed}
 				<Loader2Icon class="w-4 h-4 animate-spin" />
 			{:else}

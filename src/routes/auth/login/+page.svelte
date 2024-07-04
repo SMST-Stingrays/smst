@@ -8,7 +8,7 @@
 <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 	<div class="hidden bg-muted lg:block">
 		<img
-			src="/images/placeholder.svg"
+			src="/images/placeholder.avif"
 			alt="placeholder"
 			width="1920"
 			height="1080"
@@ -26,7 +26,11 @@
 			<LoginForm data={data.form} />
 			<div class="mt-4 text-center text-sm">
 				Don't have an account?
-				<a href="/register" class="underline"> Register </a>
+				<a href="/auth/register" class="underline"> Register </a>
+			</div>
+			<div class="text-center text-sm">
+				Forgot password?
+				<a href="/auth/login/forgot" class="underline"> How to get it reset </a>
 			</div>
 			<div class="text-center text-sm">
 				<a href="/" class="underline underline-offset-4 font-semibold">&larr; Go back home</a>

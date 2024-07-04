@@ -1,7 +1,9 @@
 <script lang="ts">
+	import Markdown from '$lib/components/Markdown.svelte';
+
 	export let src: string;
 </script>
 
 <div class="container">
-	<p class="leading-7 [&:not(:first-child)]:mt-6">{src}</p>
+	<Markdown {src} />
 </div>

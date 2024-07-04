@@ -37,9 +37,9 @@
 				<MobileLink href="/policies" bind:open class="text-foreground">Policies</MobileLink>
 				{#if $page.data.user}
 					<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
-					<MobileLink href="/logout" bind:open class="text-foreground">Log out</MobileLink>
+					<MobileLink href="/auth/logout" bind:open class="text-foreground">Log out</MobileLink>
 				{:else}
-					<MobileLink href="/login" bind:open class="text-foreground">Log in</MobileLink>
+					<MobileLink href="/auth/login" bind:open class="text-foreground">Log in</MobileLink>
 				{/if}
 			</div>
 		</ScrollArea>

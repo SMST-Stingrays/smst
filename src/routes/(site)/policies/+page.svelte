@@ -7,14 +7,18 @@
 	export let data: PageData;
 </script>
 
-<div class="text-center pt-7 bg-blue-900">
-	<h1 class="text-2xl z-50 font-bold m-auto">Policies</h1>
-</div>
-<div class="text-blue-900 relative h-20">
-	<div class="absolute top-0 h-16 w-full overflow-hidden leading-0">
-		<Divider class="absolute bottom-0" />
+<div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+	<div>
+		<div class="text-center pt-7 bg-blue-900">
+			<h1 class="text-2xl z-50 font-bold m-auto">Policies</h1>
+		</div>
+		<div class="text-blue-900 relative h-20">
+			<div class="absolute top-0 h-16 w-full overflow-hidden leading-0">
+				<Divider class="absolute bottom-0" />
+			</div>
+		</div>
 	</div>
-</div>
-<div class="container">
-	<DataTable data={data.policies} />
+	<div class="container">
+		<DataTable data={data.policies} />
+	</div>
 </div>

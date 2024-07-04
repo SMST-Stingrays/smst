@@ -37,12 +37,12 @@
 			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/dashboard"
 				>Dashboard</a
 			>
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/logout"
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/auth/logout"
 				>Log out</a
 			>
 			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
 		{:else}
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/login"
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/auth/login"
 				>Login</a
 			>
 		{/if}

@@ -16,7 +16,16 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { siteConfig } from '$lib/siteConfig';
-	import { EditIcon, GlobeIcon, HomeIcon, LogOutIcon, GavelIcon, ImageUpIcon, HouseIcon } from 'lucide-svelte';
+	import {
+		EditIcon,
+		GlobeIcon,
+		HomeIcon,
+		LogOutIcon,
+		GavelIcon,
+		ImageUpIcon,
+		HouseIcon,
+		UsersIcon, DatabaseBackupIcon
+	} from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { EDITOR, VISITOR, ADMIN } from '$lib/permissions';
 
@@ -44,6 +53,18 @@
 			name: 'Media',
 			href: '/dashboard/media',
 			visible: $page.data.user?.permissionLevel >= EDITOR
+		},
+		{
+			icon: UsersIcon,
+			name: 'Users',
+			href: '/dashboard/users',
+			visible: $page.data.user?.permissionLevel >= ADMIN
+		},
+		{
+			icon: DatabaseBackupIcon,
+			name: 'Backup',
+			href: '/dashboard/backup',
+			visible: $page.data.user?.permissionLevel >= ADMIN
 		}
 	];
 </script>

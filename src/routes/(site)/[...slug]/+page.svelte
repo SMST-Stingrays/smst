@@ -7,9 +7,11 @@
 
 <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
 	{#if data.page}
-		{#each data.page.root.components as component}
-			<Render {component} />
-		{/each}
+		{#key data.page.root.components}
+			{#each data.page.root.components as component}
+				<Render {component} />
+			{/each}
+		{/key}
 	{:else}
 		<h1 class="font-bold text-3xl">Page not found</h1>
 		<p class="leading-7">

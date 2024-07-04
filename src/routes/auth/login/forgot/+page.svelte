@@ -7,7 +7,7 @@
 <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 	<div class="hidden bg-muted lg:block">
 		<img
-			src="/images/placeholder.svg"
+			src="/images/placeholder.avif"
 			alt="placeholder"
 			width="1920"
 			height="1080"
@@ -24,7 +24,7 @@
 				</p>
 			</div>
 			<div class="text-center text-sm">
-				<a href="/login" class="underline underline-offset-4 font-semibold">&larr; Back to login</a>
+				<a href="/auth/login" class="underline underline-offset-4 font-semibold">&larr; Back to login</a>
 			</div>
 		</div>
 	</div>

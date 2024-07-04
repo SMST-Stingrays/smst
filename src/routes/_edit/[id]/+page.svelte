@@ -195,6 +195,9 @@
 										<Input id={k} bind:value={root[selected].props[k]} />
 									{:else if definition.props[k].type === ComponentPropType.LongString}
 										<Textarea id={k} bind:value={root[selected].props[k]} />
+									{:else if definition.props[k].type === ComponentPropType.LongStringMd}
+										<Textarea id={k} bind:value={root[selected].props[k]} />
+										<p class="text-muted-foreground text-sm">Use <a target="_blank" class="underline underline-offset-4" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a> to add links and styles</p>
 									{:else if definition.props[k].type === ComponentPropType.Number}
 										<Input type="number" id={k} bind:value={root[selected].props[k]} />
 									{/if}

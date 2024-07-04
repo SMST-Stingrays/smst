@@ -8,6 +8,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	});
 
+	console.log(await JSON.parse(page.data));
+
 	if (!page) {
 		return {
 			title: 'Page not found',

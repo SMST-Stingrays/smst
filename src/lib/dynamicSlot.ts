@@ -37,6 +37,7 @@ export const SELF_CLOSING_TAGS = [
 export enum ComponentPropType {
 	ShortString,
 	LongString,
+	LongStringMd,
 	Number
 }
 
@@ -90,7 +91,7 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 	Paragraph: {
 		name: 'Paragraph',
 		props: {
-			src: { default: 'Content Here', type: ComponentPropType.LongString }
+			src: { default: 'Content Here', type: ComponentPropType.LongStringMd }
 		},
 		slots: {}
 	},
