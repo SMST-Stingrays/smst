@@ -46,3 +46,12 @@ model Policy {
 
   url String
 }
+
+model Media {
+  id Int @id @default(autoincrement())
+
+  type  String
+  title String
+
+  url String
+}

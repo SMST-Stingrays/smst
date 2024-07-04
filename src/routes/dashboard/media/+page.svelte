@@ -8,7 +8,6 @@
 	import { toast } from 'svelte-sonner';
 	import DataTable from './DataTable.svelte';
 	import { page } from '$app/stores';
-	import * as Alert from "$lib/components/ui/alert";
 
 	export let data: PageData;
 
@@ -17,49 +16,44 @@
 
 <div class="flex items-center justify-between">
 	<h1 class="text-lg font-semibold md:text-2xl">{$page.data.title}</h1>
-	{#if data.policies.length !== 0}
+	{#if data.media.length !== 0}
 		<Button
 			on:click={() => {
 				createOpen = true;
-			}}>Create</Button
+			}}>Upload</Button
 		>
 	{/if}
 </div>
 
-{#if data.policies.length === 0}
+{#if data.media.length === 0}
 	<div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
 		<div class="flex flex-col items-center gap-1 text-center">
-			<h3 class="text-2xl font-bold tracking-tight">There are no policies :(</h3>
-			<p class="text-sm text-muted-foreground">Why don't you add one?</p>
+			<h3 class="text-2xl font-bold tracking-tight">There is no media :(</h3>
+			<p class="text-sm text-muted-foreground">Why don't you add some?</p>
 			<Button
 				on:click={() => {
 					createOpen = true;
 				}}
-				class="mt-4">Add Policy</Button
+				class="mt-4">Upload Media</Button
 			>
 		</div>
 	</div>
 {:else}
-	<DataTable fData={data.updateForm} data={data.policies} />
+	<DataTable data={data.media} />
 {/if}
 
 <Dialog.Root bind:open={createOpen}>
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
-			<Dialog.Title>Add new policy</Dialog.Title>
+			<Dialog.Title>Upload new media</Dialog.Title>
 			<Dialog.Description>
-				Make sure your link is visible to the public. Preferably, a PDF document uploaded to the
-				content bucket, to ensure proper global reachability.
+				Media will automatically be uploaded to the content bucket and a URL will be generated. Media CANNOT be edited. You must delete it and upload new media in it's place.
 			</Dialog.Description>
 		</Dialog.Header>
-		<Alert.Root class="bg-zinc-900">
-			<Alert.Title>Need to upload a file?</Alert.Title>
-			<Alert.Description>Use the builtin file storage to store your policies. Save it as a PDF, then upload it to the <b>Media</b> tab in the dashboard. Click the three dots and then <u>Copy Media URL</u> to get a link you can paste below or share on social media!</Alert.Description>
-		</Alert.Root>
 		<CreateForm
 			onSubmit={async () => {
 				createOpen = false;
-				toast.success('New policy added successfully!');
+				toast.success('Media uploaded successfully!');
 			}}
 			data={data.form}
 		/>

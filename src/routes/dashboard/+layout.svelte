@@ -2,7 +2,6 @@
 	import CircleUser from 'lucide-svelte/icons/circle-user';
 	import LineChart from 'lucide-svelte/icons/line-chart';
 	import Package from 'lucide-svelte/icons/package';
-	import Home from 'lucide-svelte/icons/home';
 	import ShoppingCart from 'lucide-svelte/icons/shopping-cart';
 	import Bell from 'lucide-svelte/icons/bell';
 	import Menu from 'lucide-svelte/icons/menu';
@@ -17,13 +16,13 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { siteConfig } from '$lib/siteConfig';
-	import { EditIcon, GlobeIcon, HomeIcon, LogOutIcon, GavelIcon } from 'lucide-svelte';
+	import { EditIcon, GlobeIcon, HomeIcon, LogOutIcon, GavelIcon, ImageUpIcon, HouseIcon } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { EDITOR, VISITOR, ADMIN } from '$lib/permissions';
 
 	let dashboardPages: { icon: any; name: string; href: string; visible: boolean }[] = [
 		{
-			icon: HomeIcon,
+			icon: HouseIcon,
 			name: 'Dashboard',
 			href: '/dashboard',
 			visible: $page.data.user?.permissionLevel >= VISITOR
@@ -39,6 +38,12 @@
 			name: 'Policies',
 			href: '/dashboard/policies',
 			visible: $page.data.user?.permissionLevel >= ADMIN
+		},
+		{
+			icon: ImageUpIcon,
+			name: 'Media',
+			href: '/dashboard/media',
+			visible: $page.data.user?.permissionLevel >= EDITOR
 		}
 	];
 </script>
