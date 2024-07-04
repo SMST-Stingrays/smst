@@ -3,7 +3,6 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
 import { fail, redirect } from '@sveltejs/kit';
-import { hash, verify } from 'argon2';
 import { prisma } from '$lib/db';
 import { VISITOR } from '$lib/permissions';
 import jwt from 'jsonwebtoken';
@@ -35,7 +34,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const valid = await verify(existing_user.password, form.data.password);
+			const valid = await Bun.password.verify(existing_user.password, form.data.password);
 
 			if (!valid) {
 				return setError(form, 'password', 'Incorrect password');
@@ -50,6 +49,7 @@ export const actions: Actions = {
 
 			event.cookies.set('token', token, { path: '/' });
 		} catch (e) {
+			console.log(e);
 			return setError(
 				form,
 				'password',

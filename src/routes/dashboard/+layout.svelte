@@ -28,6 +28,7 @@
 	} from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { EDITOR, VISITOR, ADMIN } from '$lib/permissions';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	let dashboardPages: { icon: any; name: string; href: string; visible: boolean }[] = [
 		{
@@ -67,6 +68,7 @@
 			visible: $page.data.user?.permissionLevel >= ADMIN
 		}
 	];
+	import { logout } from "$lib/authPublic";
 </script>
 
 <div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -143,7 +145,7 @@
 					<DropdownMenu.Label>Hi, {$page.data.user?.first_name}</DropdownMenu.Label>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item href="/">Return to main site</DropdownMenu.Item>
-					<DropdownMenu.Item href="/logout">Logout</DropdownMenu.Item>
+					<DropdownMenu.Item on:click={logout}>Logout</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
 		</header>

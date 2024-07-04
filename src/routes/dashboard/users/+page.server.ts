@@ -7,7 +7,6 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
 import { updateFormSchema } from './updateFormSchema';
-import { hash } from 'argon2';
 import { resetFormSchema } from './resetFormSchema';
 
 export const load: PageServerLoad = async ({ parent }) => {
@@ -47,7 +46,7 @@ export const actions: Actions = {
 				first_name: form.data.first_name,
 				last_name: form.data.last_name,
 				username: form.data.username,
-				password: await hash(form.data.password),
+				password: await Bun.password.hash(form.data.password),
 				permissionLevel: form.data.permissionLevel
 			}
 		});
@@ -103,7 +102,7 @@ export const actions: Actions = {
 				id: form.data.id
 			},
 			data: {
-				password: await hash(form.data.password)
+				password: await Bun.password.hash(form.data.password)
 			}
 		});
 

@@ -3,7 +3,6 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
 import { fail, redirect } from '@sveltejs/kit';
-import { hash } from 'argon2';
 import { prisma } from '$lib/db';
 import { VISITOR } from '$lib/permissions';
 import jwt from 'jsonwebtoken';
@@ -40,7 +39,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const p_hash = await hash(form.data.password);
+			const p_hash = await Bun.password.hash(form.data.password);
 
 			const user = await prisma.user.create({
 				data: {

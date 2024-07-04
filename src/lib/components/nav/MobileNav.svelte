@@ -7,8 +7,11 @@
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
+	import { goto, invalidateAll } from '$app/navigation';
+	import { logout } from "$lib/authPublic";
 
 	let open = false;
+
 </script>
 
 <Sheet.Root bind:open>
@@ -37,7 +40,7 @@
 				<MobileLink href="/policies" bind:open class="text-foreground">Policies</MobileLink>
 				{#if $page.data.user}
 					<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
-					<MobileLink href="/auth/logout" bind:open class="text-foreground">Log out</MobileLink>
+					<MobileLink href="#" onclick={logout} bind:open class="text-foreground">Log out</MobileLink>
 				{:else}
 					<MobileLink href="/auth/login" bind:open class="text-foreground">Log in</MobileLink>
 				{/if}

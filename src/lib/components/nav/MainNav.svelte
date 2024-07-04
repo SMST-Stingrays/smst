@@ -2,6 +2,8 @@
 	import { siteConfig } from '$lib/siteConfig';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
+	import { logout } from "$lib/authPublic";
+
 </script>
 
 <div class="mr-4 hidden md:flex">
@@ -37,7 +39,7 @@
 			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/dashboard"
 				>Dashboard</a
 			>
-			<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/auth/logout"
+			<a class="transition-colors hover:text-foreground/80 text-foreground/60" on:click={logout} href="#"
 				>Log out</a
 			>
 			<span class="transition-colors text-foreground/80">Hi, {$page.data.user.first_name}!</span>
