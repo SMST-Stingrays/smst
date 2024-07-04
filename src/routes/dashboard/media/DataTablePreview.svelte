@@ -11,4 +11,7 @@
 	<div class="max-w-sm">
 		<Image class="rounded-lg overflow-hidden" src={url} alt="Preview of {url}" />
 	</div>
+	{#if type === "galleryPhoto"}
+		<p class="text-muted-foreground">(visible in gallery)</p>
+	{/if}
 {/if}

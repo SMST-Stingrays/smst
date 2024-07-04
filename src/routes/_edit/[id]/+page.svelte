@@ -3,7 +3,7 @@
 	import { ChevronDown, ChevronUp, DoorOpenIcon, PlusIcon, SaveIcon } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import {
-		type Component,
+		type Component, ComponentPropType,
 		editorComponents,
 		type EditorComponentSpec,
 		type PageTree
@@ -15,6 +15,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import * as Resizable from '$lib/components/ui/resizable';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { Textarea } from '$lib/components/ui/textarea';
 
 	export let data: PageData;
 
@@ -187,8 +188,17 @@
 								<p class="text-sm">Selected: #{selected} {root[selected].componentId}</p>
 
 								{#each Object.entries(root[selected].props) as [k, v]}
+									{@const definition = editorComponents[root[selected].componentId]}
 									<Label for={k}>{k}</Label>
-									<Input id={k} bind:value={root[selected].props[k]} />
+
+									{#if definition.props[k].type === ComponentPropType.ShortString}
+										<Input id={k} bind:value={root[selected].props[k]} />
+									{:else if definition.props[k].type === ComponentPropType.LongString}
+										<Textarea id={k} bind:value={root[selected].props[k]} />
+									{:else if definition.props[k].type === ComponentPropType.Number}
+										<Input type="number" id={k} bind:value={root[selected].props[k]} />
+									{/if}
+
 								{/each}
 
 								<Button on:click={rm(selected)} variant="destructive">Delete</Button>

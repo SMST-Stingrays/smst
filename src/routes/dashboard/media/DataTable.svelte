@@ -19,9 +19,21 @@
 			accessor: 'title',
 			header: 'File'
 		}),
+
+		table.column({
+			accessor: 'type',
+			header: 'Type',
+			cell: ({value}) => {
+				if (value === 'photo') { return "Photo (Page Editor Only)" }
+				else if (value === 'galleryPhoto') { return "Photo (In Gallery)" }
+				else if (value === 'policy') { return "Policy" }
+				else { return "Unknown" }
+			}
+		}),
 		table.column({
 			accessor: ({ type, url }) => {return {type, url}},
 			header: 'Preview',
+			// @ts-expect-error it's fine shut
 			cell: ({ value }) => createRender(DataTablePreview, value)
 		}),
 		table.column({

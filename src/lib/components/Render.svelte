@@ -11,6 +11,7 @@
 	import ImgParagraphLeft from '$lib/components/pageComponents/ImgParagraphLeft.svelte';
 	import Separator from '$lib/components/pageComponents/Separator.svelte';
 	import ThreeBoxes from '$lib/components/pageComponents/ThreeBoxes.svelte';
+	import SecondaryPageHeader from '$lib/components/pageComponents/SecondaryPageHeader.svelte';
 
 	export let component: Component;
 
@@ -27,6 +28,7 @@
 		['ImgParagraphLeft', ImgParagraphLeft],
 		['Separator', Separator],
 		['ThreeBoxes', ThreeBoxes],
+		['SecondaryPageHeader', SecondaryPageHeader],
 		[EMPTY.componentId, Empty]
 	]);
 

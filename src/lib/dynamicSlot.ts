@@ -127,4 +127,11 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 		},
 		slots: {}
 	},
+	SecondaryPageHeader: {
+		name: 'Page Header (Secondary)',
+		props: {
+			title: { default: 'Your title here', type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	}
 };
