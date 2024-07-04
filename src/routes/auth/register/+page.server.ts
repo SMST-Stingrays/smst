@@ -7,6 +7,7 @@ import { prisma } from '$lib/db';
 import { VISITOR } from '$lib/permissions';
 import { JWT_KEY } from '$env/static/private';
 import { nanoid } from 'nanoid';
+import { hashSync } from 'bcrypt-ts/browser';
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -39,7 +40,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const p_hash = await Bun.password.hash(form.data.password);
+			const p_hash = hashSync(form.data.password, 8);
 
 			const user = await prisma.user.create({
 				data: {

@@ -43,6 +43,7 @@
     "@prisma/client": "5.13.0",
     "@sveltejs/adapter-cloudflare": "^4.6.0",
     "@unpic/svelte": "^0.0.53",
+    "bcrypt-ts": "^5.0.2",
     "bits-ui": "^0.21.11",
     "clsx": "^2.1.1",
     "formsnap": "^1.0.1",

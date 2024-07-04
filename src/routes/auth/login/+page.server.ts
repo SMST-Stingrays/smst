@@ -7,6 +7,7 @@ import { prisma } from '$lib/db';
 import { VISITOR } from '$lib/permissions';
 import { JWT_KEY } from '$env/static/private';
 import { nanoid } from 'nanoid';
+import { compareSync } from 'bcrypt-ts/browser';
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -34,7 +35,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const valid = await Bun.password.verify(form.data.password, existing_user.password);
+			const valid = compareSync(form.data.password, existing_user.password);
 
 			if (!valid) {
 				return setError(form, 'password', 'Incorrect password');
