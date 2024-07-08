@@ -27,8 +27,14 @@
 					<Dialog.Content>
 						<Dialog.Header>
 							<Dialog.Title>{photo.title}</Dialog.Title>
-							<Dialog.Title></Dialog.Title>
 						</Dialog.Header>
+
+						<Image alt={photo.title} class=" rounded-md mb-6 transition" src={photo.url} />
+
+						<p><b>Filename:</b> {photo.title}</p>
+						<p><b>Uploaded:</b> {photo.createdAt}</p>
+						<p><b>File ID:</b> {photo.id}</p>
+
 					</Dialog.Content>
 				</Dialog.Root>
 			{/each}
