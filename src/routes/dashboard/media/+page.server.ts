@@ -42,25 +42,26 @@ export const actions: Actions = {
 			return fail(401, withFiles({ form }));
 		}
 
-		const file = form.data.file;
+		for (const file of form.data.file) {
+			console.log(`Media Upload: Processing ${file.name}`);
+			const key = `${form.data.type}/${nanoid()}/${file.name}`;
 
-		const key = `${form.data.type}/${nanoid()}/${form.data.file.name}`;
+			const command = new PutObjectCommand({
+				Bucket: S3_BUCKET_NAME,
+				Key: key,
+				// @ts-expect-error it works fine, shut up
+				Body: await file.arrayBuffer()
+			});
 
-		const command = new PutObjectCommand({
-			Bucket: S3_BUCKET_NAME,
-			Key: key,
-			// @ts-expect-error it works fine, shut up
-			Body: await file.arrayBuffer()
-		});
-
-		await S3.send(command);
-		await prisma().media.create({
-			data: {
-				type: form.data.type,
-				title: file.name,
-				url: S3_BUCKET_BASE + key
-			}
-		});
+			await S3.send(command);
+			await prisma().media.create({
+				data: {
+					type: form.data.type,
+					title: file.name,
+					url: S3_BUCKET_BASE + key
+				}
+			});
+		}
 
 		return withFiles({ form });
 	},
@@ -78,5 +79,24 @@ export const actions: Actions = {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}
 		});
+	},
+	deleteMany: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		const ids: number[] = JSON.parse((await event.request.formData()).get("id")!.toString());
+
+		for (const id of ids) {
+			await prisma().media.delete({
+				where: {
+					id
+				}
+			});
+		}
 	}
 };

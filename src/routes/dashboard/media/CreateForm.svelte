@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SuperDebug, { fileProxy, type Infer, superForm, type SuperValidated } from 'sveltekit-superforms';
+	import SuperDebug, { filesProxy, type Infer, superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { formSchema, type FormSchema } from './schema';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { Button } from '$lib/components/ui/button';
@@ -44,9 +44,7 @@
 	}
 	$: acceptableFileTypes = fTypes[$formData.type];
 
-	let input: HTMLInputElement;
-
-	const file = fileProxy(form, "file");
+	const file = filesProxy(form, "file");
 </script>
 
 <form enctype="multipart/form-data" method="POST" use:enhance action="?/create">
@@ -75,10 +73,24 @@
 			</Alert.Root>
 		{/if}
 
-		<div class="space-y-2">
-			<label for="file-input" class="text-sm font-medium leading-none">File Upload</label>
-			<input bind:this={input} class="pt-1.5 flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid]:border-destructive [&>span]:line-clamp-1 data-[placeholder]:[&>span]:text-muted-foreground" id="file-input" type="file" name="file" accept={acceptableFileTypes} bind:files={$file} />
-		</div>
+		<Form.Field {form} name="file">
+			<Form.Control let:attrs>
+				<!--<div class="space-y-2">-->
+					<!--<label for="file-input" class="text-sm font-medium leading-none">File Upload</label>-->
+<!--				</div>-->
+				<Form.Label>File Upload</Form.Label>
+				<!--  -->
+				<input {...attrs} multiple type="file" name="file" accept={acceptableFileTypes} bind:files={$file} class="pt-1.5 flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid]:border-destructive [&>span]:line-clamp-1 data-[placeholder]:[&>span]:text-muted-foreground" />
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
+
+		<p>Your files must, in total, be less than 100 MB.</p>
+
+		<Alert.Root class="bg-zinc-900">
+			<Alert.Title>Please be patient!</Alert.Title>
+			<Alert.Description>Media can take a long time to upload and process, especially if you're uploading multiple files. Please be patient and <b>DO NOT CLOSE THE TAB OR THE POPUP</b> until uploads are complete. This popup will close when finished.</Alert.Description>
+		</Alert.Root>
 
 		<Form.Button class="w-full">
 			{#if $delayed}

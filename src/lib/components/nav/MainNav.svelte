@@ -32,6 +32,13 @@
 			)}
 			href="/policies">Policies</a
 		>
+		<a
+			class={cn(
+				'transition-colors hover:text-foreground/80',
+				$page.url.pathname === `/photos` ? 'text-foreground' : 'text-foreground/60'
+			)}
+			href="/photos">Photos</a
+		>
 	</nav>
 </div>
 
