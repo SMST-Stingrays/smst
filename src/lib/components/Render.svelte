@@ -12,6 +12,7 @@
 	import Separator from '$lib/components/pageComponents/Separator.svelte';
 	import ThreeBoxes from '$lib/components/pageComponents/ThreeBoxes.svelte';
 	import SecondaryPageHeader from '$lib/components/pageComponents/SecondaryPageHeader.svelte';
+	import Button from '$lib/components/pageComponents/Button.svelte';
 
 	export let component: Component;
 
@@ -29,6 +30,7 @@
 		['Separator', Separator],
 		['ThreeBoxes', ThreeBoxes],
 		['SecondaryPageHeader', SecondaryPageHeader],
+		['Button', Button],
 		[EMPTY.componentId, Empty]
 	]);
 

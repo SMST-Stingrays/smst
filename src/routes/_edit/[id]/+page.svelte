@@ -82,6 +82,25 @@
 		toast.success('Page edited successfully!');
 	}
 
+	function moveUp(i: number | null) {
+		if (i === null) return;
+		if (i === 0) return;
+		let a = root[i-1];
+		root[i-1] = root[i];
+		root[i] = a;
+		root = root;
+		selected = i - 1;
+	}
+	function moveDown(i: number | null) {
+		if (i === null) return;
+		if (i === root.length-1) return;
+		let a = root[i+1];
+		root[i+1] = root[i];
+		root[i] = a;
+		root = root;
+		selected = i + 1;
+	}
+
 	let selected: number | null = null;
 </script>
 
@@ -205,6 +224,8 @@
 								{/each}
 
 								<Button on:click={rm(selected)} variant="destructive">Delete</Button>
+								<Button on:click={() => {moveUp(selected)}} disabled={selected === 0} variant="outline">Move Up</Button>
+								<Button on:click={() => {moveDown(selected)}} disabled={selected === root.length-1} variant="outline">Move Down</Button>
 							{:else}
 								<p class="text-sm">
 									Nothing selected, select something in the tree above to edit it
@@ -218,9 +239,11 @@
 	</div>
 	<div class="flex flex-col">
 		<main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-			{#each root as c}
-				<Render component={c} />
-			{/each}
+			{#key root}
+				{#each root as c}
+					<Render component={c} />
+				{/each}
+			{/key}
 		</main>
 	</div>
 </div>

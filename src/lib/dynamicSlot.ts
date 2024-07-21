@@ -134,5 +134,13 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			title: { default: 'Your title here', type: ComponentPropType.ShortString }
 		},
 		slots: {}
+	},
+	Button: {
+		name: 'Button (Primary)',
+		props: {
+			text: { default: 'Button', type: ComponentPropType.ShortString },
+			url: { default: 'https://example.com', type: ComponentPropType.ShortString },
+		},
+		slots: {}
 	}
 };
