@@ -142,5 +142,38 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			url: { default: 'https://example.com', type: ComponentPropType.ShortString },
 		},
 		slots: {}
-	}
+	},
+	HomeHeroVidImg: {
+		name: 'Home Hero Vid/Image',
+		props: {
+			imgSrc: { default: 'https://content.gosmst.com/images/5e9e7ae2-3b25-4c09-ad34-8d0c1ab74e86.jpg', type: ComponentPropType.ShortString },
+			headerText: { default: 'Stingrays Summer Swim Team', type: ComponentPropType.ShortString },
+			buttonText: { default: 'Watch the 2024 season recap', type: ComponentPropType.ShortString },
+			vidSrc: { default: 'https://drive.google.com/file/d/1UEpz4DN4mSbgDRWsf1UlF9O3iFYoy20p/preview', type: ComponentPropType.ShortString },
+		},
+		slots: {}
+	},
+	ImgParagraphWithTitle: {
+		name: 'Image Paragraph (Titled)',
+		props: {
+			url: {
+				default: 'https://content.gosmst.com/images/5e9e7ae2-3b25-4c09-ad34-8d0c1ab74e86.jpg',
+				type: ComponentPropType.ShortString
+			},
+			alt: { default: 'Description Image', type: ComponentPropType.ShortString },
+			side: { default: 'left', type: ComponentPropType.ShortString },
+			title: { default: 'Your Title Goes Here!', type: ComponentPropType.ShortString },
+			src: { default: 'Your Content Goes Here!', type: ComponentPropType.LongString },
+		},
+		slots: {}
+	},
+	WaveSeparator: {
+		name: 'Homepage - Big Num Wage',
+		props: {
+			line1: { default: 'Since our inception, the Stingrays organization has had a positive impact on more than', type: ComponentPropType.ShortString },
+			number: { default: '1,850', type: ComponentPropType.ShortString },
+			line2: { default: 'youth within both Sheffield Manor as well as surrounding neighborhoods in Concord, NC.', type: ComponentPropType.ShortString },
+		},
+		slots: {}
+	},
 };

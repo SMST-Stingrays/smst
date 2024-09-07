@@ -8,6 +8,7 @@
 	import Package2 from 'lucide-svelte/icons/package-2';
 	import Search from 'lucide-svelte/icons/search';
 	import Users from 'lucide-svelte/icons/users';
+	import logo from "$lib/logo.png";
 
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -76,7 +77,7 @@
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/dashboard" class="flex items-center gap-2 font-semibold">
-					<span class="">{siteConfig.name}</span>
+					<img class="h-12" alt={siteConfig.name} src={logo} />
 				</a>
 				<Button href="/" label="Back to site" variant="outline" size="icon" class="ml-auto h-8 w-8">
 					<GlobeIcon class="h-4 w-4" />

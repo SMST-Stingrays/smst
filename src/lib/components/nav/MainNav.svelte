@@ -3,14 +3,13 @@
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 	import { logout } from "$lib/authPublic";
+	import logo from '$lib/logo.png';
 
 </script>
 
 <div class="mr-4 hidden md:flex">
 	<a href="/" class="mr-6 flex items-center space-x-2">
-		<span class="hidden font-bold sm:inline-block text-p">
-			{siteConfig.name}
-		</span>
+		<img class="hidden sm:inline-block h-12" alt={siteConfig.name} src={logo} />
 	</a>
 
 	<nav class="flex items-center gap-6 text-sm">

@@ -13,6 +13,9 @@
 	import ThreeBoxes from '$lib/components/pageComponents/ThreeBoxes.svelte';
 	import SecondaryPageHeader from '$lib/components/pageComponents/SecondaryPageHeader.svelte';
 	import Button from '$lib/components/pageComponents/Button.svelte';
+	import HomeHeroVidImg from '$lib/components/pageComponents/HomeHeroVidImg.svelte';
+	import ImgParagraphWithTitle from '$lib/components/pageComponents/ImgParagraphWithTitle.svelte';
+	import WaveSeparator from '$lib/components/pageComponents/WaveSeparator.svelte';
 
 	export let component: Component;
 
@@ -31,7 +34,10 @@
 		['ThreeBoxes', ThreeBoxes],
 		['SecondaryPageHeader', SecondaryPageHeader],
 		['Button', Button],
-		[EMPTY.componentId, Empty]
+		['HomeHeroVidImg', HomeHeroVidImg],
+		['ImgParagraphWithTitle', ImgParagraphWithTitle],
+		['WaveSeparator', WaveSeparator],
+		[EMPTY.componentId, Empty],
 	]);
 
 	console.log(component);
