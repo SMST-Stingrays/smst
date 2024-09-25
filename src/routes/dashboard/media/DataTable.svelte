@@ -157,6 +157,9 @@
 					Delete Selected
 				</Button>
 			{/if}
+			{#if deleteLoading}
+				Mass deletes can take a very, very long time. Please be patient!
+			{/if}
 		</div>
 
 
