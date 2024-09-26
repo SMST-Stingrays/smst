@@ -14,7 +14,6 @@ import { S3_BUCKET_BASE } from "$env/static/private";
 import { encode } from "blurhash";
 import { getPixels } from '@unpic/pixels';
 import type { Media } from '@prisma/client';
-import sharp from 'sharp'
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();
