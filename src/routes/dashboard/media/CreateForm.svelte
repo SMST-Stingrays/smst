@@ -140,7 +140,7 @@
 			{/if}
 		</Form.Button>
 		{#if progress === 100}
-			<p>Upload complete. Media is now processing. Media will be made available once processing is complete. You may now close this tab, or wait for processing to finish.</p>
+			<p>Media is processing. DO NOT CLOSE THIS TAB until processing is complete.</p>
 		{/if}
 	</div>
 </form>

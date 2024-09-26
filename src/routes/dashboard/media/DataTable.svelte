@@ -132,6 +132,34 @@
 		selectedDataIds.set({});
 		deleteLoading = false;
 	}
+
+	let optimizeLoading = false;
+	async function optimizeSelected() {
+		optimizeLoading = true;
+
+		let ids = [];
+
+		for (const r_id of Object.keys(get(selectedDataIds))) {
+			const id = data[Number(r_id)].id;
+			ids.push(id);
+		}
+
+
+		let rdata = new URLSearchParams();
+		rdata.set("id", JSON.stringify(ids));
+		await fetch("?/optimizeMany", {
+			method: 'POST',
+			body: rdata.toString(),
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		});
+
+		await invalidateAll();
+		toast.success("Media optimized successfully!");
+		selectedDataIds.set({});
+		optimizeLoading = false;
+	}
 </script>
 
 <div class="p-0 mt-0">
@@ -159,6 +187,18 @@
 			{/if}
 			{#if deleteLoading}
 				Mass deletes can take a very, very long time. Please be patient!
+			{/if}
+
+			{#if Object.keys($selectedDataIds).length}
+				<Button on:click={optimizeSelected} variant="outline" disabled={optimizeLoading}>
+					{#if optimizeLoading}
+						<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
+					{/if}
+					Optimize Selected
+				</Button>
+			{/if}
+			{#if deleteLoading}
+				Image optimization can take a long time. Please be patient!
 			{/if}
 		</div>
 

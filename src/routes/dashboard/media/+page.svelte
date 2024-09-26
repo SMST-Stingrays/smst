@@ -8,54 +8,37 @@
 	import { toast } from 'svelte-sonner';
 	import DataTable from './DataTable.svelte';
 	import { page } from '$app/stores';
+	import * as Tabs from "$lib/components/ui/tabs";
+	import MediaTab from './MediaTab.svelte';
 
 	export let data: PageData;
 
 	let createOpen = false;
+	let currentTab = "galleryPhoto";
 </script>
 
 <div class="flex items-center justify-between">
 	<h1 class="text-lg font-semibold md:text-2xl">{$page.data.title}</h1>
-	{#if data.media.length !== 0}
 		<Button
 			on:click={() => {
 				createOpen = true;
 			}}>Upload</Button
 		>
-	{/if}
 </div>
 
-{#if data.media.length === 0}
-	<div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-		<div class="flex flex-col items-center gap-1 text-center">
-			<h3 class="text-2xl font-bold tracking-tight">There is no media :(</h3>
-			<p class="text-sm text-muted-foreground">Why don't you add some?</p>
-			<Button
-				on:click={() => {
-					createOpen = true;
-				}}
-				class="mt-4">Upload Media</Button
-			>
-		</div>
-	</div>
-{:else}
-	<DataTable data={data.media} />
-{/if}
-
-<Dialog.Root bind:open={createOpen}>
-	<Dialog.Content class="sm:max-w-[425px]">
-		<Dialog.Header>
-			<Dialog.Title>Upload new media</Dialog.Title>
-			<Dialog.Description>
-				Media will automatically be uploaded to the content bucket and a URL will be generated. Media CANNOT be edited. You must delete it and upload new media in it's place.
-			</Dialog.Description>
-		</Dialog.Header>
-		<CreateForm
-			onSubmit={async () => {
-				createOpen = false;
-				toast.success('Media uploaded successfully!');
-			}}
-			data={data.form}
-		/>
-	</Dialog.Content>
-</Dialog.Root>
+<Tabs.Root bind:value={currentTab}>
+	<Tabs.List class="grid w-full grid-cols-3">
+		<Tabs.Trigger value="galleryPhoto">Gallery Photo</Tabs.Trigger>
+		<Tabs.Trigger value="photo">Site Photo</Tabs.Trigger>
+		<Tabs.Trigger value="policy">Policy</Tabs.Trigger>
+	</Tabs.List>
+	<Tabs.Content value="galleryPhoto">
+		<MediaTab bind:createOpen data={data.media.galleryPhoto} form={data.form} />
+	</Tabs.Content>
+	<Tabs.Content value="photo">
+		<MediaTab bind:createOpen data={data.media.photo} form={data.form} />
+	</Tabs.Content>
+	<Tabs.Content value="policy">
+		<MediaTab bind:createOpen data={data.media.policy} form={data.form} />
+	</Tabs.Content>
+</Tabs.Root>

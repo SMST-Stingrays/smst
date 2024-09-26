@@ -11,6 +11,10 @@ import { S3_BUCKET_NAME } from '$env/static/private';
 import { nanoid } from 'nanoid';
 import { S3 } from '$lib/s3';
 import { S3_BUCKET_BASE } from "$env/static/private";
+import { encode } from "blurhash";
+import { getPixels } from '@unpic/pixels';
+import type { Media } from '@prisma/client';
+import sharp from 'sharp'
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();
@@ -18,21 +22,43 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const media = await prisma().media.findMany({});
+	const galleryPhotos = await prisma().media.findMany({
+		where: {
+			type: "galleryPhoto"
+		}
+	});
+	const photos = await prisma().media.findMany({
+		where: {
+			type: "photo"
+		}
+	});
+	const policies = await prisma().media.findMany({
+		where: {
+			type: "policy"
+		}
+	});
 
 	return {
 		title: 'Media',
-		media,
+		media: {
+			galleryPhoto: galleryPhotos,
+			photo: photos,
+			policy: policies
+		},
 		form: await superValidate(zod(formSchema)),
 	};
 };
 
 export const actions: Actions = {
 	create: async (event) => {
+		console.log("Got media ul req");
 		const form = await superValidate(event, zod(formSchema));
 		if (!form.valid) {
+			console.log("form invalid :(");
 			return fail(400, withFiles({ form }));
 		}
+
+		console.log("form validated");
 
 		const user = await loadUser(event.cookies);
 		if (!user) {
@@ -46,19 +72,45 @@ export const actions: Actions = {
 			console.log(`Media Upload: Processing ${file.name}`);
 			const key = `${form.data.type}/${nanoid()}/${file.name}`;
 
+			const data = await file.arrayBuffer();
+
 			const command = new PutObjectCommand({
 				Bucket: S3_BUCKET_NAME,
 				Key: key,
 				// @ts-expect-error it works fine, shut up
-				Body: await file.arrayBuffer()
+				Body: data
 			});
 
 			await S3.send(command);
+
+			let queryString = "";
+
+			if (form.data.type === "photo" || form.data.type === "galleryPhoto") {
+				// image, calculate blurhash and append it to the URL
+				console.log("img upload: resizing");
+				const r = await sharp(data).resize(480).toBuffer();
+				console.log("img upload: parsing");
+				const imageData = await getPixels(r);
+				console.log("img upload: clamping");
+				const pdata = new Uint8ClampedArray(imageData.data);
+				console.log("img upload: hashing");
+				const hash = encode(pdata, imageData.width, imageData.height, 4, 4);
+				let urlparams = new URLSearchParams();
+				urlparams.set("bh", hash);
+				urlparams.set("w", imageData.width);
+				urlparams.set("h", imageData.height);
+				urlparams.set("cx", 4);
+				urlparams.set("cy", 4);
+				queryString = `?${urlparams.toString()}`;
+			}
+
+			console.log("upload: writing");
+
 			await prisma().media.create({
 				data: {
 					type: form.data.type,
 					title: file.name,
-					url: S3_BUCKET_BASE + key
+					url: S3_BUCKET_BASE + key + queryString
 				}
 			});
 		}
@@ -98,5 +150,66 @@ export const actions: Actions = {
 				}
 			});
 		}
+	},
+	optimizeMany: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		const ids: number[] = JSON.parse((await event.request.formData()).get("id")!.toString());
+
+		const cl = prisma();
+
+		console.log("optimizing media");
+		console.log(ids);
+
+		let medias = await cl.media.findMany({});
+
+		let fns = [];
+
+		let total = ids.length;
+		let i = 0;
+
+		for (const id of ids) {
+			i++;
+			let media: Media | undefined = undefined;
+			for (let m of medias) {
+				if (m.id === id) {
+					media = m;
+				}
+			}
+			if (media === undefined) continue;
+			if (!media.url.includes('?bh=')) {
+				if (media.type === "photo" || media.type === "galleryPhoto") {
+					let i2 = `${i}`;
+					fns.push((async () => {
+						console.log(`${i2}/${total} optimizing ${media.url} - load`);
+						// image, calculate blurhash and append it to the URL
+						const imageData = await getPixels(media.url);
+						console.log(`${i2}/${total} optimizing ${media.url} - clamp`);
+						const pdata = new Uint8ClampedArray(imageData.data);
+
+						console.log(`${i2}/${total} optimizing ${media.url} - hash`);
+						const hash = encode(pdata, imageData.width, imageData.height, 4, 4);
+						console.log(`${i2}/${total} optimizing ${media.url} - urlencode`);
+						let url = `${media.url}?bh=${hash}`;
+						console.log(`${i2}/${total} optimizing ${media.url} - rewrite to ${url}`);
+						await cl.media.update({
+							where: {
+								id: id
+							},
+							data: {
+								url
+							}
+						});
+					})());
+				}
+			}
+		}
+		await Promise.all(fns);
 	}
 };
