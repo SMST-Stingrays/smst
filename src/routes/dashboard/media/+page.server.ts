@@ -87,20 +87,18 @@ export const actions: Actions = {
 
 			if (form.data.type === "photo" || form.data.type === "galleryPhoto") {
 				// image, calculate blurhash and append it to the URL
-				console.log("img upload: resizing");
-				const r = await sharp(data).resize(480).toBuffer();
 				console.log("img upload: parsing");
-				const imageData = await getPixels(r);
+				const imageData = await getPixels(data);
 				console.log("img upload: clamping");
 				const pdata = new Uint8ClampedArray(imageData.data);
 				console.log("img upload: hashing");
 				const hash = encode(pdata, imageData.width, imageData.height, 4, 4);
-				let urlparams = new URLSearchParams();
+				const urlparams = new URLSearchParams();
 				urlparams.set("bh", hash);
-				urlparams.set("w", imageData.width);
-				urlparams.set("h", imageData.height);
-				urlparams.set("cx", 4);
-				urlparams.set("cy", 4);
+				urlparams.set("w", String(imageData.width));
+				urlparams.set("h", String(imageData.height));
+				urlparams.set("cx", "4");
+				urlparams.set("cy", "4");
 				queryString = `?${urlparams.toString()}`;
 			}
 
