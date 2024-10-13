@@ -17,6 +17,8 @@
 	import ImgParagraphWithTitle from '$lib/components/pageComponents/ImgParagraphWithTitle.svelte';
 	import WaveSeparator from '$lib/components/pageComponents/WaveSeparator.svelte';
 	import TimelineItem from '$lib/components/pageComponents/TimelineItem.svelte';
+	import CenteredSubheader from '$lib/components/pageComponents/CenteredSubheader.svelte';
+	import CenteredParagraph from '$lib/components/pageComponents/CenteredParagraph.svelte';
 
 	export let component: Component;
 
@@ -39,6 +41,8 @@
 		['ImgParagraphWithTitle', ImgParagraphWithTitle],
 		['WaveSeparator', WaveSeparator],
 		['TimelineItem', TimelineItem],
+		['CenteredSubheader', CenteredSubheader],
+		['CenteredParagraph', CenteredParagraph],
 		[EMPTY.componentId, Empty],
 	]);
 

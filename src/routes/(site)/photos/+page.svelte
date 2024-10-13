@@ -3,43 +3,9 @@
 	import { Image } from '@unpic/svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import * as Dialog from "$lib/components/ui/dialog";
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+	import { IMAGE_TRANSFORM_PREFIX } from '$lib/dynamicSlot';
 
 	export let data: PageData;
-
-	const all_photos = data.photos2;
-	let shownPhotos = [];
-	let cols = [
-		[],
-		[],
-		[]
-	];
-	function move(n: number) {
-		for (let i = 0; i < n; i++) {
-			let photo = all_photos.shift();
-			shownPhotos.push(photo);
-			cols[i % 3].push(photo);
-		}
-		shownPhotos = shownPhotos;
-		cols = cols;
-		console.log(cols);
-	}
-	move(6);
-
-	let trigger;
-	onMount(() => {
-		if (browser) {
-			const handleIntersect = (entries, observer) => {
-				entries.forEach((entry) => {
-					move(6);
-				});
-			};
-			const options = { threshold: 0.5, rootMargin: '-100% 0% 100%' };
-			const observer = new IntersectionObserver(handleIntersect, options);
-			observer.observe(trigger);
-		}
-	})
 </script>
 
 <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -55,19 +21,19 @@
 	</div>
 	<div class="container">
 		<div class="hidden md:grid grid-cols-3 gap-6">
-				{#each cols as col}
+				{#each data.cols as col}
 					<div class="flex flex-col">
 					{#each col as photo}
 						<Dialog.Root>
 							<Dialog.Trigger>
-								<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src={photo.photo.url} />
+								<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src="{IMAGE_TRANSFORM_PREFIX}{photo.photo.url}" />
 							</Dialog.Trigger>
 							<Dialog.Content>
 								<Dialog.Header>
 									<Dialog.Title>{photo.photo.title}</Dialog.Title>
 								</Dialog.Header>
 
-								<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class=" rounded-md mb-6 transition" src={photo.photo.url} />
+								<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class=" rounded-md mb-6 transition" src="{IMAGE_TRANSFORM_PREFIX}{photo.photo.url}" />
 
 								<p><b>Filename:</b> {photo.photo.title}</p>
 								<p><b>Uploaded:</b> {photo.photo.createdAt}</p>
@@ -80,17 +46,17 @@
 				{/each}
 		</div>
 		<div class="flex md:hidden flex-col gap-6 flex-wrap">
-			{#each shownPhotos as photo}
+			{#each data.photos2 as photo}
 				<Dialog.Root>
 					<Dialog.Trigger>
-						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src={photo.photo.url} />
+						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src="{IMAGE_TRANSFORM_PREFIX}{photo.photo.url}" />
 					</Dialog.Trigger>
 					<Dialog.Content>
 						<Dialog.Header>
 							<Dialog.Title>{photo.photo.title}</Dialog.Title>
 						</Dialog.Header>
 
-						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class=" rounded-md mb-6 transition" src={photo.photo.url} />
+						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 transition" src="{IMAGE_TRANSFORM_PREFIX}{photo.photo.url}" />
 
 						<p><b>Filename:</b> {photo.photo.title}</p>
 						<p><b>Uploaded:</b> {photo.photo.createdAt}</p>
@@ -100,6 +66,6 @@
 				</Dialog.Root>
 			{/each}
 		</div>
-		<p bind:this={trigger}>It seems you've ran out of photos! Check back another time.</p>
+		<p>It seems you've ran out of photos! Check back another time.</p>
 	</div>
 </div>

@@ -25,7 +25,8 @@
 			fn: ({ filterValue, value }) =>
 				value.toLowerCase().includes(filterValue.toLowerCase()),
 		}),
-		select: addSelectedRows()
+		select: addSelectedRows(),
+		page: addPagination()
 	});
 	const columns = table.createColumns([
 		table.column({
@@ -101,6 +102,8 @@
 
 	const { filterValue } = pluginStates.filter;
 	const { selectedDataIds } = pluginStates.select;
+
+	const { hasNextPage, hasPreviousPage, pageIndex } = pluginStates.page;
 
 	let deleteLoading = false;
 
@@ -240,5 +243,20 @@
 				{/each}
 			</Table.Body>
 		</Table.Root>
+	</div>
+
+	<div class="flex items-center justify-end space-x-4 py-4">
+		<Button
+			variant="outline"
+			size="sm"
+			on:click={() => ($pageIndex = $pageIndex - 1)}
+			disabled={!$hasPreviousPage}>Previous</Button
+		>
+		<Button
+			variant="outline"
+			size="sm"
+			disabled={!$hasNextPage}
+			on:click={() => ($pageIndex = $pageIndex + 1)}>Next</Button
+		>
 	</div>
 </div>

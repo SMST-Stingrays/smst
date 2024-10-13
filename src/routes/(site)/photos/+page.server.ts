@@ -29,7 +29,15 @@ export const load: PageServerLoad = async () => {
 		}
 	}
 
+	let cols = [
+		[],[],[]
+	];
+	for (let i = 0; i < photos2.length; i++) {
+		cols[i % 3].push(photos2[i]);
+	}
+
 	return {
-		photos2
+		photos2,
+		cols
 	};
 };

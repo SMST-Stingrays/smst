@@ -191,4 +191,20 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 		},
 		slots: {}
 	},
+	CenteredSubheader: {
+		name: 'Centered Subheader',
+		props: {
+			text: { default: 'Your text here', type: ComponentPropType.ShortString }
+		},
+		slots: {}
+	},
+	CenteredParagraph: {
+		name: 'Centered Paragraph',
+		props: {
+			src: { default: 'Content Here', type: ComponentPropType.LongStringMd }
+		},
+		slots: {}
+	}
 };
+
+export const IMAGE_TRANSFORM_PREFIX = "https://gosmst.com/cdn-cgi/image/anim=false,format=auto,fit=scale-down,width=800,metadata=none/";
