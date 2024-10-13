@@ -38,6 +38,7 @@
 					<MobileLink href="/{p.slug}" bind:open class="text-foreground">{p.name}</MobileLink>
 				{/each}
 				<MobileLink href="/policies" bind:open class="text-foreground">Policies</MobileLink>
+				<MobileLink href="/photos" bind:open class="text-foreground">Photos</MobileLink>
 				{#if $page.data.user}
 					<MobileLink href="/dashboard" bind:open class="text-foreground">Dashboard</MobileLink>
 					<MobileLink href="#" onclick={logout} bind:open class="text-foreground">Log out</MobileLink>
