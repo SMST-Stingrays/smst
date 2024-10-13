@@ -176,4 +176,19 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 		},
 		slots: {}
 	},
+	TimelineItem: {
+		name: 'Timeline Item',
+		props: {
+			url: {
+				default: 'https://content.gosmst.com/images/5e9e7ae2-3b25-4c09-ad34-8d0c1ab74e86.jpg',
+				type: ComponentPropType.ShortString
+			},
+			alt: { default: 'Description Image', type: ComponentPropType.ShortString },
+			side: { default: 'left', type: ComponentPropType.ShortString },
+			title: { default: 'Your Title Goes Here!', type: ComponentPropType.ShortString },
+			src: { default: 'Your Content Goes Here!', type: ComponentPropType.LongString },
+			date: { default: 'Month Day, Someyear', type: ComponentPropType.ShortString },
+		},
+		slots: {}
+	},
 };

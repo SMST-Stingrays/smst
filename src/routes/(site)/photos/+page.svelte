@@ -19,21 +19,21 @@
 	</div>
 	<div class="container">
 		<div class="columns-3 gap-6">
-			{#each data.photos as photo}
+			{#each data.photos2 as photo}
 				<Dialog.Root>
 					<Dialog.Trigger>
-						<Image alt={photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src={photo.url} />
+						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class="rounded-md mb-6 hover:scale-[1.02] transition" src={photo.photo.url} />
 					</Dialog.Trigger>
 					<Dialog.Content>
 						<Dialog.Header>
-							<Dialog.Title>{photo.title}</Dialog.Title>
+							<Dialog.Title>{photo.photo.title}</Dialog.Title>
 						</Dialog.Header>
 
-						<Image alt={photo.title} class=" rounded-md mb-6 transition" src={photo.url} />
+						<Image background={photo.bh} width={photo.w} height={photo.h} alt={photo.photo.title} class=" rounded-md mb-6 transition" src={photo.photo.url} />
 
-						<p><b>Filename:</b> {photo.title}</p>
-						<p><b>Uploaded:</b> {photo.createdAt}</p>
-						<p><b>File ID:</b> {photo.id}</p>
+						<p><b>Filename:</b> {photo.photo.title}</p>
+						<p><b>Uploaded:</b> {photo.photo.createdAt}</p>
+						<p><b>File ID:</b> {photo.photo.id} {photo.bh}</p>
 
 					</Dialog.Content>
 				</Dialog.Root>

@@ -16,6 +16,7 @@
 	import HomeHeroVidImg from '$lib/components/pageComponents/HomeHeroVidImg.svelte';
 	import ImgParagraphWithTitle from '$lib/components/pageComponents/ImgParagraphWithTitle.svelte';
 	import WaveSeparator from '$lib/components/pageComponents/WaveSeparator.svelte';
+	import TimelineItem from '$lib/components/pageComponents/TimelineItem.svelte';
 
 	export let component: Component;
 
@@ -37,6 +38,7 @@
 		['HomeHeroVidImg', HomeHeroVidImg],
 		['ImgParagraphWithTitle', ImgParagraphWithTitle],
 		['WaveSeparator', WaveSeparator],
+		['TimelineItem', TimelineItem],
 		[EMPTY.componentId, Empty],
 	]);
 
