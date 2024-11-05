@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Media" ADD COLUMN     "listPrio" INTEGER NOT NULL DEFAULT -1;

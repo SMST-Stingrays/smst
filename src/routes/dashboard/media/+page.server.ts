@@ -22,16 +22,25 @@ export const load: PageServerLoad = async ({ parent }) => {
 	}
 
 	const galleryPhotos = await prisma().media.findMany({
+		orderBy: [
+			{ listPrio: 'asc' }
+		],
 		where: {
 			type: "galleryPhoto"
 		}
 	});
 	const photos = await prisma().media.findMany({
+		orderBy: [
+			{ listPrio: 'asc' }
+		],
 		where: {
 			type: "photo"
 		}
 	});
 	const policies = await prisma().media.findMany({
+		orderBy: [
+			{ listPrio: 'asc' }
+		],
 		where: {
 			type: "policy"
 		}
@@ -126,6 +135,46 @@ export const actions: Actions = {
 		await prisma().media.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
+			}
+		});
+	},
+	up: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().media.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { decrement: 1 }
+			}
+		});
+	},
+	down: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().media.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { increment: 1 }
 			}
 		});
 	},

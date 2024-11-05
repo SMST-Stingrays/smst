@@ -19,6 +19,8 @@ model Page {
 
   data String
 
+  listPrio Int @default(-1)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -53,6 +55,8 @@ model Policy {
   code  String
   title String
 
+  listPrio Int @default(-1)
+
   url String
 }
 
@@ -63,6 +67,8 @@ model Media {
   title String
 
   url String
+
+  listPrio Int @default(-1)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

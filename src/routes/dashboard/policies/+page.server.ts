@@ -14,9 +14,11 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const policies = await prisma().policy.findMany({});
-
-	console.log(policies);
+	const policies = await prisma().policy.findMany({
+		orderBy: [
+			{ listPrio: 'asc' }
+		]
+	});
 
 	return {
 		title: 'Policies',
@@ -92,5 +94,45 @@ export const actions: Actions = {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
 			}
 		});
-	}
+	},
+	up: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().policy.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { decrement: 1 }
+			}
+		});
+	},
+	down: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().policy.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { increment: 1 }
+			}
+		});
+	},
 };

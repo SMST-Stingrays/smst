@@ -32,6 +32,30 @@
 		await invalidateAll();
 		toast.success("Policy removed successfully!");
 	}
+	async function up() {
+		let data = new URLSearchParams();
+		data.set("id", id);
+		await fetch("?/up", {
+			method: 'POST',
+			body: data.toString(),
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		});
+		await invalidateAll();
+	}
+	async function down() {
+		let data = new URLSearchParams();
+		data.set("id", id);
+		await fetch("?/down", {
+			method: 'POST',
+			body: data.toString(),
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		});
+		await invalidateAll();
+	}
 </script>
 
 <DropdownMenu.Root bind:open={dropOpen}>
@@ -60,6 +84,8 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item href={url}>View</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={up}>Move Up</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={down}>Move Down</DropdownMenu.Item>
 		<DropdownMenu.Item
 			on:click={() => {
 				dropOpen = false;

@@ -14,7 +14,11 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return redirect(307, '/dashboard');
 	}
 
-	const pages = await prisma().page.findMany({});
+	const pages = await prisma().page.findMany({
+		orderBy: [
+			{ listPrio: 'asc' }
+		]
+	});
 
 	return {
 		title: 'Page Editor',
@@ -74,6 +78,66 @@ export const actions: Actions = {
 		await prisma().page.delete({
 			where: {
 				id: Number.parseInt((await event.request.formData()).get("id")!.toString())
+			}
+		});
+	},
+	rename: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().page.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				name: data.get("name")!.toString()
+			}
+		});
+	},
+	up: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().page.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { decrement: 1 }
+			}
+		});
+	},
+	down: async (event) => {
+		const user = await loadUser(event.cookies);
+		if (!user) {
+			return fail(401, {});
+		}
+		if (user.permissionLevel < EDITOR) {
+			return fail(401, {});
+		}
+
+		let data = (await event.request.formData());
+
+		await prisma().page.update({
+			where: {
+				id: Number.parseInt(data.get("id")!.toString())
+			},
+			data: {
+				listPrio: { increment: 1 }
 			}
 		});
 	}

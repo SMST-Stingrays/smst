@@ -84,6 +84,10 @@
 			}
 		}),
 		table.column({
+			accessor: 'listPrio',
+			header: 'Order (lowest first)'
+		}),
+		table.column({
 			accessor: ({ id, url, type, title }) => {
 				return { id, url, type, title };
 			},

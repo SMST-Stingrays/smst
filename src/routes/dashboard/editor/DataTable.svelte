@@ -23,8 +23,12 @@
 			header: 'Slug'
 		}),
 		table.column({
-			accessor: ({ id, slug }) => {
-				return { id, slug };
+			accessor: 'listPrio',
+			header: 'Order (lowest first)'
+		}),
+		table.column({
+			accessor: ({ id, slug, name }) => {
+				return { id, slug, name };
 			},
 			header: '',
 			cell: ({ value }) => createRender(DataTableActions, value)

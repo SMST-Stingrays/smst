@@ -26,6 +26,10 @@
 			header: 'Title'
 		}),
 		table.column({
+			accessor: 'listPrio',
+			header: 'Order (lowest first)',
+		}),
+		table.column({
 			accessor: ({ id, url, code, title }) => {
 				return { id, url, code, title, data: fData };
 			},
