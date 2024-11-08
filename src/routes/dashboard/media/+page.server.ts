@@ -86,7 +86,8 @@ export const actions: Actions = {
 				Bucket: S3_BUCKET_NAME,
 				Key: key,
 				// @ts-expect-error it works fine, shut up
-				Body: data
+				Body: data,
+				ContentType: form.data.type === "policy" && "application/pdf" || null,
 			});
 
 			await S3.send(command);

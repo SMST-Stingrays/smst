@@ -204,6 +204,13 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			src: { default: 'Content Here', type: ComponentPropType.LongStringMd }
 		},
 		slots: {}
+	},
+	PDF: {
+		name: 'PDF Embed',
+		props: {
+			src: { default: 'https://content.gosmst.com/policy/h6Q0kPCnqfGdWKQzmrAkc/SMST Volunteer Descriptions.pdf', type: ComponentPropType.ShortString }
+		},
+		slots: {}
 	}
 };
 

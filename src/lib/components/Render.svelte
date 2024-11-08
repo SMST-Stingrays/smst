@@ -19,6 +19,7 @@
 	import TimelineItem from '$lib/components/pageComponents/TimelineItem.svelte';
 	import CenteredSubheader from '$lib/components/pageComponents/CenteredSubheader.svelte';
 	import CenteredParagraph from '$lib/components/pageComponents/CenteredParagraph.svelte';
+	import PDF from '$lib/components/pageComponents/PDF.svelte';
 
 	export let component: Component;
 
@@ -43,6 +44,7 @@
 		['TimelineItem', TimelineItem],
 		['CenteredSubheader', CenteredSubheader],
 		['CenteredParagraph', CenteredParagraph],
+		['PDF', PDF],
 		[EMPTY.componentId, Empty],
 	]);
 
