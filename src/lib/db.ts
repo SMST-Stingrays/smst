@@ -7,6 +7,7 @@ import { PrismaNeon } from '@prisma/adapter-neon';
 export function prisma() {
 	console.log("here! - creating db");
 	neonConfig.webSocketConstructor = ws;
+	neonConfig.poolQueryViaFetch = true;
 	const pool = new Pool({ connectionString: DATABASE_URL });
 	const adapter = new PrismaNeon(pool);
 	console.log("created");
