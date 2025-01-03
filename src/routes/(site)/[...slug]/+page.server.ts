@@ -2,11 +2,13 @@ import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/db';
 
 export const load: PageServerLoad = async ({ params }) => {
+	console.log("finding page...");
 	const page = await prisma().page.findUnique({
 		where: {
 			slug: params.slug
 		}
 	});
+	console.log("found!");
 
 	if (!page) {
 		return {
