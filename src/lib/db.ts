@@ -5,6 +5,7 @@ import { DATABASE_URL } from '$env/static/private';
 import { PrismaNeon } from '@prisma/adapter-neon';
 
 export function prisma() {
+	console.log("here!");
 	neonConfig.webSocketConstructor = ws;
 	const pool = new Pool({ connectionString: DATABASE_URL });
 	const adapter = new PrismaNeon(pool);
