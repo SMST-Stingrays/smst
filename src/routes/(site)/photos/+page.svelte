@@ -66,6 +66,6 @@
 				</Dialog.Root>
 			{/each}
 		</div>
-		<button on:click={window.location.reload}>Show more photos</button>
+		<button on:click={() => {window.location.reload();}}>Show more photos</button>
 	</div>
 </div>
