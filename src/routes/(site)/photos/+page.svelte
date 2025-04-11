@@ -66,6 +66,6 @@
 				</Dialog.Root>
 			{/each}
 		</div>
-		<p>It seems you've ran out of photos! Check back another time.</p>
+		<button on:click={window.location.reload}>Show more photos</button>
 	</div>
 </div>

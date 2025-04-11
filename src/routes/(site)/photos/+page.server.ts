@@ -9,6 +9,21 @@ export const load: PageServerLoad = async () => {
 		}
 	});
 
+	const randomPhotoIndicies: number[] = [];
+	for (let i = 0; i < 10; i++) {
+		const thisPhoto = Math.floor(Math.random() * photos.length);
+		if (randomPhotoIndicies.includes(thisPhoto)) {
+			i--;
+			continue;
+		}
+		randomPhotoIndicies.push(thisPhoto);
+	}
+
+	const photosRandom = [];
+	for (const idx of randomPhotoIndicies) {
+		photosRandom.push(photos[idx]);
+	}
+
 	const photos2 = [];
 	for (const photo of photos) {
 		const url = new URL(photo.url);
