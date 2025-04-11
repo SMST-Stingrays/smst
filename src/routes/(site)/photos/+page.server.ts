@@ -25,7 +25,7 @@ export const load: PageServerLoad = async () => {
 	}
 
 	const photos2 = [];
-	for (const photo of photos) {
+	for (const photo of photosRandom) {
 		const url = new URL(photo.url);
 		if (url.searchParams.has("w") && url.searchParams.has("h") && url.searchParams.has("bh")) {
 			photos2.push({
