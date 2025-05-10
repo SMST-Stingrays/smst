@@ -87,10 +87,11 @@ export const actions: Actions = {
 				Key: key,
 				// @ts-expect-error it works fine, shut up
 				Body: data,
-				ContentType: form.data.type === "policy" && "application/pdf" || null,
+				ContentType: form.data.type === "policy" && "application/pdf" || file.type,
 			});
 
-			await S3.send(command);
+			console.log(command);
+			console.log(await S3.send(command));
 
 			let queryString = "";
 
@@ -117,7 +118,8 @@ export const actions: Actions = {
 				data: {
 					type: form.data.type,
 					title: file.name,
-					url: S3_BUCKET_BASE + key + queryString
+					// Not a clue why this is happening now. It never did this before
+					url: S3_BUCKET_BASE + S3_BUCKET_NAME + "/" + key + queryString
 				}
 			});
 		}

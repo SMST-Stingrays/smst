@@ -211,6 +211,11 @@ export const editorComponents: { [id: string]: EditorComponentSpec } = {
 			src: { default: 'https://content.gosmst.com/policy/h6Q0kPCnqfGdWKQzmrAkc/SMST Volunteer Descriptions.pdf', type: ComponentPropType.ShortString }
 		},
 		slots: {}
+	},
+	SponsorCarousel: {
+		name: 'Sponsor Carousel',
+		props: {},
+		slots: {}
 	}
 };
 

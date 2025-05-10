@@ -25,7 +25,7 @@
 		GavelIcon,
 		ImageUpIcon,
 		HouseIcon,
-		UsersIcon, DatabaseBackupIcon
+		UsersIcon, DatabaseBackupIcon, HandCoinsIcon
 	} from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { EDITOR, VISITOR, ADMIN } from '$lib/permissions';
@@ -48,6 +48,12 @@
 			icon: GavelIcon,
 			name: 'Policies',
 			href: '/dashboard/policies',
+			visible: $page.data.user?.permissionLevel >= ADMIN
+		},
+		{
+			icon: HandCoinsIcon,
+			name: 'Sponsors',
+			href: '/dashboard/sponsors',
 			visible: $page.data.user?.permissionLevel >= ADMIN
 		},
 		{

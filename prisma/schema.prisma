@@ -60,6 +60,16 @@ model Policy {
   url String
 }
 
+model Sponsor {
+  id Int @id @default(autoincrement())
+
+  name        String
+  logoUrl     String
+  sponsorLink String
+
+  listPrio Int @default(-1)
+}
+
 model Media {
   id Int @id @default(autoincrement())
 

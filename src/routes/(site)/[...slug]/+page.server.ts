@@ -22,8 +22,9 @@ export const load: PageServerLoad = async ({ params }) => {
 				root: await JSON.parse(page.data),
 				title: page.name,
 				createdAt: page.createdAt,
-				updatedAt: page.updatedAt
-			}
+				updatedAt: page.updatedAt,
+			},
+			sponsors: await prisma().sponsor.findMany({})
 		};
 	}
 };

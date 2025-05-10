@@ -20,6 +20,7 @@
 	import CenteredSubheader from '$lib/components/pageComponents/CenteredSubheader.svelte';
 	import CenteredParagraph from '$lib/components/pageComponents/CenteredParagraph.svelte';
 	import PDF from '$lib/components/pageComponents/PDF.svelte';
+	import SponsorCarousel from '$lib/components/pageComponents/SponsorCarousel.svelte';
 
 	export let component: Component;
 
@@ -45,6 +46,7 @@
 		['CenteredSubheader', CenteredSubheader],
 		['CenteredParagraph', CenteredParagraph],
 		['PDF', PDF],
+		['SponsorCarousel', SponsorCarousel],
 		[EMPTY.componentId, Empty],
 	]);
 
