@@ -104,8 +104,8 @@
 	let selected: number | null = null;
 </script>
 
-<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-	<div class="hidden border-r bg-muted/40 md:block">
+<div class="flex flex-row">
+	<div class="w-[15vw] border-r bg-muted/40 md:block">
 		<div class="flex h-full min-h-screen flex-col">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/dashboard" class="flex items-center gap-2 font-semibold">
@@ -237,7 +237,7 @@
 			</Resizable.PaneGroup>
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<div class="flex flex-col w-[85vw]">
 		<main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
 			{#key root}
 				{#each root as c}
