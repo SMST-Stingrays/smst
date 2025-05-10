@@ -22,7 +22,8 @@ export const load: PageServerLoad = async ({ params, parent }) => {
 
 	return {
 		title: `Editing ${page.name}`,
-		page
+		page,
+		sponsors: await prisma().sponsor.findMany({})
 	};
 };
 
