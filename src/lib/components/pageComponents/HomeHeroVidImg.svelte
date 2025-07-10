@@ -12,10 +12,10 @@
 </script>
 
 <div class="relative">
-	<Image src={imgSrc} alt="Hero image" class="h-screen brightness-90" />
+	<Image src={imgSrc} alt="Hero image" class="w-screen brightness-90" />
 	<h1 class="text-3xl font-bold drop-shadow-[0_0.2px_2.2px_rgba(0,0,0,0.8)] absolute top-4 left-0 right-0 mx-auto text-center">{headerText}</h1>
 	<Dialog.Root>
-		<Dialog.Trigger class={cn(buttonVariants(), "absolute border-yellow-700 border-2 left-0 right-0 mx-auto text-center bottom-24 drop-shadow-[0_0.2px_2.2px_rgba(0,0,0,0.8)]")}>
+		<Dialog.Trigger class={cn(buttonVariants(), "absolute border-yellow-700 border-2 left-0 right-0 mx-auto text-center bottom-2 drop-shadow-[0_0.2px_2.2px_rgba(0,0,0,0.8)]")}>
 			<VideoIcon class="w-4 h-4 mr-2" />
 			{buttonText}
 		</Dialog.Trigger>
